@@ -1,10 +1,9 @@
 class QrCodesController < ApplicationController
 
   def index
-   
   end
 
-  def index2
+  def validate_view
   end
 
 end
