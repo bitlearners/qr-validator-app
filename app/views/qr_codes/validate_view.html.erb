@@ -1,0 +1,36 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+
+	<h1>validate</h1>
+	<br>
+	<h3>
+	<%= params["status"] %>
+	<br>
+	<br>
+
+	<% if params["code"]=="200" %>
+		Welcome
+	<% else %>
+		Who are you boy ?
+	<% end %>
+	</h3>
+	<br>
+
+
+
+	<%= button_to 'Camera', qr_reader_path, method: :get %>
+
+</body>
+</html>
+
+
+
+
