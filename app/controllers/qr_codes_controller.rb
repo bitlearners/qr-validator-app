@@ -1,9 +1,13 @@
+require 'json'
+
 class QrCodesController < ApplicationController
 
   def index
   end
 
-  def validate_view
+  def validate
+    puts params["data"]
+    
   end
 
 end

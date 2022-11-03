@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   
   get 'qr_reader', to: 'qr_codes#index'
 
-  post 'qr_validate/:data', to: 'qr_codes#validate'
-  get 'qr_validate', to: 'qr_codes#validate_view'
+  post 'qr_validate', to: 'qr_codes#validate'
+  #get 'qr_validate', to: 'qr_codes#validate_view'
   
   
 

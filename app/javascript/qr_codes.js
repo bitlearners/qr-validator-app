@@ -1,80 +1,12 @@
-
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="ZXing for JS">
-
-  <title>QR Scanner App</title>
-
-  <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-  <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
-  <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
-</head>
-
-<body>
-
-  <main class="wrapper" style="padding-top:2em">
-
-    <section class="container" id="demo-content">
-      <h1 class="title">Scan QR Code </h1>
-
-      <p>This example shows how to scan a QR code with ZXing javascript library from the device video camera. If more
-        than one video input devices are available (for example front and back camera) the example shows how to read
-        them and use a select to change the input device.</p>
-
-      <div>
-        <a class="button" id="startButton">Start</a>
-        <a class="button" id="resetButton">Reset</a>
-      </div>
-
-      <div>
-        <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
-      </div>
-
-      <div id="sourceSelectPanel" style="display:none">
-        <label for="sourceSelect">Change video source:</label>
-        <select id="sourceSelect" style="max-width:400px">
-        </select>
-      </div>
-
-      <div style="display: table">
-        <label for="decoding-style"> Decoding Style:</label>
-        <select id="decoding-style" size="1">
-          <option value="once" selected>Decode once</option>
-          <option value="continuously">Decode continuously</option>
-        </select>
-      </div>
-
-      <label>Result:</label>
-      <pre><code id="result"></code></pre>
-
-      <p>See the <a href="https://github.com/zxing-js/library/tree/master/docs/examples/qr-camera/">source code</a> for
-        this example.</p>
-    </section>
-
-    <footer class="footer">
-      <section class="container">
-        <p>ZXing TypeScript Demo. Licensed under the <a target="_blank"
-            href="https://github.com/zxing-js/library#license" title="MIT">MIT</a>.</p>
-      </section>
-    </footer>
-
-  </main>
-
-  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
-  <script type="text/javascript">
-    function decodeOnce(codeReader, selectedDeviceId) {
+function decodeOnce(codeReader, selectedDeviceId) {
       codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
         console.log(result)
         document.getElementById('result').textContent = result.text
-        payload = {"data": result.text}
-        $.ajax({
+        
+        Rails.ajax({
           type: "POST", 
           url: "/qr_validate",
-          data: payload,
+          data: {"data": result.text},
           success: function(repsonse){ console.log("POST Success") },
           error: function(repsonse){ console.log("POST fail") }
         })
@@ -182,8 +114,3 @@
           console.error(err)
         })
     })
-  </script>
-
-</body>
-
-</html>
