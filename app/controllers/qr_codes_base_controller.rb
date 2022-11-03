@@ -1,5 +1,6 @@
 class QrCodesBaseController < ApplicationController
-
+	protect_from_forgery with: :null_session
+	
   def conn
     @conn ||= App.task_reminder_firebase.conn
   end
