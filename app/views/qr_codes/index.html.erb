@@ -33,11 +33,11 @@
       console.log(result)
       document.getElementById('result').textContent = result.text
       payload = {"data": result.text}
+      navigator.vibrate(200)
       $.ajax({
         type: "POST", 
         url: "/qr_validate",
         data: payload,
-        navigator.vibrate(200);
         success: function(repsonse){ console.log("POST Success") },
         error: function(repsonse){ console.log("POST fail") }
       })
