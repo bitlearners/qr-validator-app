@@ -1,4 +1,4 @@
-
+require_relative './../../app'
 App.require_common
 
 
