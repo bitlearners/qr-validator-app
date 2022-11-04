@@ -7,7 +7,8 @@ firebase_instances = [
     instance: :task_reminder_firebase,
     firebase_db_url: ENV['firebase_db_url'],
     firebase_auth_key: ENV['firebase_auth_key'],
-    firebase_db_root_path: ENV['firebase_db_root_path'],
+    firebase_qr_db_root_path: ENV['firebase_qr_db_root_path'],
+    firebase_user_db_root_path: ENV['firebase_user_db_root_path'],
   },
 ]
 

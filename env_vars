@@ -1,3 +1,5 @@
 export firebase_db_url=https://qr-code-db-777b0-default-rtdb.asia-southeast1.firebasedatabase.app/
 export firebase_auth_key=RRTCBZaTz3cIbLbnu7sWQkxAJ9ibh6Aly7G8Y79t
-export firebase_db_root_path=QR-values
+export firebase_qr_db_root_path=QR-values
+export firebase_web_api_key=AIzaSyCdEsp2sWRyhJ1r_T4CKzNFwLHiKh-paMc
+export firebase_user_db_root_path=users

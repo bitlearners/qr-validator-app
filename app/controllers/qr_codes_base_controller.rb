@@ -1,6 +1,8 @@
-class QrCodesBaseController < ApplicationController
+class QrCodesBaseController < HomeController
 	protect_from_forgery with: :null_session
-	
+	before_action :set_user_data, only: %i[signup login]
+  before_action :set_task, only: %i[ show edit update destroy ]
+
   def conn
     @conn ||= App.task_reminder_firebase.conn
   end

@@ -15,7 +15,7 @@ module Qr
     def initialize(config)
       @url = config[:firebase_db_url]
       @auth_key = config[:firebase_auth_key]
-      @rdb_path = config[:firebase_db_root_path]
+      @rdb_path = config[:firebase_qr_db_root_path]
       @conn = connection
     end
 

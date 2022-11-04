@@ -1,4 +1,5 @@
 class QrCodesController < QrCodesBaseController
+  
   # {"08dd1001c0ed942c168c55ca638e9ba3"=>{"scanned-at"=>"03-Nov-22 5:07pm", "scanned-by"=>"user1", "sr-no"=>1, "status"=>0}}
 
   def index

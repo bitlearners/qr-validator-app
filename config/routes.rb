@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  get '/login', to: 'home#login'
+  get '/signup', to: 'home#signup'
+  
+  post '/login', to: 'home#login'
+  get '/logout', to: 'home#logout'
+  post '/signup', to: 'home#signup'
+  
   root to: 'qr_codes#index'
   
   get 'qr_reader', to: 'qr_codes#index'

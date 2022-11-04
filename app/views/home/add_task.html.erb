@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        Home page
+    </title>
+</head>
+<body>
+    <h2>
+     home file
+    </h2><br>
+    <%= link_to "calendar", calendar_path %>
+    <br><br>
+
+    <% @tasks.each do |t| %>
+        <%= t.dig("created_at") %> <br>
+        <%= t.dig("date") %> <br>
+        <%= t.dig("day") %> <br>
+        <%= t.dig("desc") %> <br>
+        <%= t.dig("entity_type") %> <br>
+        <%= t.dig("id") %> <br>
+        <%= t.dig("modified_at") %> <br>
+        <%= t.dig("name") %> <br>
+        <%= t.dig("priority") %> <br>
+        <%= t.dig("status") %> <br>
+        <%= t.dig("tags") %> <br>
+        <%= t.dig("time") %> <br>
+        <br><br><br><br>
+    <% end %>
+
+</body>
+</html>
+
