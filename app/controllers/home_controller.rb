@@ -20,7 +20,6 @@ class HomeController < ApplicationController
       session[:user_id] = data['localId']
       session[:data] = data
       redirect_to root_path, notice: "Logged In successfully" 
-    
     end
   end
 

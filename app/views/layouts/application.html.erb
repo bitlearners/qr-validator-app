@@ -2,28 +2,22 @@
 <html>
   <head>
     <title>QrScannerApp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
-    <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-
-    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
-
+    <%= render 'home/header' %>
   </head>
 
   <body>
+
+    <header>
+      <%= render 'layouts/alerts' %>
+    </header>
+
     <% if current_user %>
        <%= link_to "Logout", logout_path, class:'nav-link login-status' %>
     <% end %>
-      <main class="wrapper" style="padding-top:2em">
-        <%= yield %>
-      </main>
+    <main class="wrapper" style="padding-top:0em">
+      <%= yield %>
+    </main>
 
 
 </body>

@@ -4,15 +4,16 @@
 
 <p id="scan_status"></p>
 
-<div>
-  <a class="button" id="startButton">Re Scan</a>
-  <a class="button" id="resetButton">Reset</a>
-</div>
-
-
 <div id="qr_container">
   <video id="qr_vid_el"> </video>
 </div>
+
+<div>
+  <a class="button" id="resetButton">cancel</a>
+  <a class="button" id="startButton">Re-scan</a>
+  <a class="button" id="approveButton">Approve</a>
+</div>
+
 
 <div id="sourceSelectPanel" style="display:none">
   <label for="sourceSelect">Change video source:</label>
@@ -20,8 +21,7 @@
   </select>
 </div>
 
-<div style="display: table">
-  <label for="decoding-style"> Decoding Style:</label>
+<div style="display: none">
   <select id="decoding-style" size="1">
     <option value="once" selected>Decode once</option>
     <option value="continuously">Decode continuously</option>
@@ -31,13 +31,20 @@
 <label>Result:</label>
 <pre><code id="result"></code></pre>
 
+<script type="text/javascript" async>
+  let selectedDeviceId;
+  let codeReader;
 
-<script type="text/javascript">
+
+  document.getElementById('qr_vid_el').addEventListener('unload', reset_qr_feed );
+
   function decodeOnce(codeReader, selectedDeviceId) {
     codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'qr_vid_el').then((result) => {
       console.log(result)
+      reset_qr_feed()
       document.getElementById('result').textContent = result.text
       payload = {"data": result.text}
+
       $.ajax({
         type: "POST",
         url: "/qr_validate",
@@ -52,44 +59,35 @@
     })
   }
 
-  function decodeContinuously(codeReader, selectedDeviceId) {
-    codeReader.decodeFromInputVideoDeviceContinuously(selectedDeviceId, 'qr_vid_el', (result, err) => {
-      if (result) {
-        // properly decoded qr code
-        console.log('Found QR code!', result)
-        document.getElementById('result').textContent = result.text
-      }
-
-      if (err) {
-        // As long as this error belongs into one of the following categories
-        // the code reader is going to continue as excepted. Any other error
-        // will stop the decoding loop.
-        //
-        // Excepted Exceptions:
-        //
-        //  - NotFoundException
-        //  - ChecksumException
-        //  - FormatException
-
-        if (err instanceof ZXing.NotFoundException) {
-          console.log('No QR code found.')
-        }
-
-        if (err instanceof ZXing.ChecksumException) {
-          console.log('A code was found, but it\'s read value was not valid.')
-        }
-
-        if (err instanceof ZXing.FormatException) {
-          console.log('A code was found, but it was in a invalid format.')
-        }
-      }
-    })
+  function reset_qr_feed() {
+    codeReader.reset()
+    document.getElementById('result').textContent = '';
+    console.log('Reset.')
   }
 
-  window.addEventListener('load', function () {
-    let selectedDeviceId;
-    const codeReader = new ZXing.BrowserQRCodeReader()
-    console.log('code reader initialized')
+  function start_qr_feed() {
+    const decodingStyle = document.getElementById('decoding-style').value;
+    document.getElementById('result').textContent = '';
+    document.getElementById('scan_status').textContent = '';
+
+    if (decodingStyle == "once") {
+      decodeOnce(codeReader, selectedDeviceId);
+    } else {
+      decodeContinuously(codeReader, selectedDeviceId);
+    }
+
+    //console.log(`Started decode from camera with id ${selectedDeviceId}`);
+    console.log('Started decode from camera');
+  }
+
+  window.addEventListener('load', process() );
+  //$(document).on('page:change', process() );
+
+  function process(){
+    //const codeReader = new ZXing.BrowserQRCodeReader();
+    console.log('code reader initialized');
+    codeReader = new ZXing.BrowserQRCodeReader();
+    console.log('code reader initialized');
 
     const decodingStyle = document.getElementById('decoding-style').value;
 
@@ -99,7 +97,8 @@
       decodeContinuously(codeReader, selectedDeviceId);
     }
 
-    console.log(`Started decode from camera with id ${selectedDeviceId}`)
+    //console.log(`Started decode from camera with id ${selectedDeviceId}`);
+    console.log('Started decode from camera');
 
 
     codeReader.getVideoInputDevices()
@@ -123,45 +122,22 @@
         }
 
         document.getElementById('startButton').addEventListener('click', () => {
-
-          const decodingStyle = document.getElementById('decoding-style').value;
-
-          if (decodingStyle == "once") {
-            decodeOnce(codeReader, selectedDeviceId);
-          } else {
-            decodeContinuously(codeReader, selectedDeviceId);
-          }
-
-          console.log(`Started decode from camera with id ${selectedDeviceId}`)
-        })
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-          const decodingStyle = document.getElementById('decoding-style').value;
-
-          if (decodingStyle == "once") {
-            decodeOnce(codeReader, selectedDeviceId);
-          } else {
-            decodeContinuously(codeReader, selectedDeviceId);
-          }
-
-          console.log(`Started decode from camera with id ${selectedDeviceId}`)
+          start_qr_feed();
         })
 
         document.getElementById('resetButton').addEventListener('click', () => {
-          codeReader.reset()
-          document.getElementById('result').textContent = '';
-          console.log('Reset.')
+          reset_qr_feed() ;
         })
 
       })
       .catch((err) => {
-        console.error(err)
+        console.error(`main error \n ${err}`)
       })
-  })
+   
+  }
 
-
+  //$(document).on("page:before-render", reset_qr_feed() );
+  //window.onbeforeunload = reset_qr_feed ;
 
 </script>
 </section>
