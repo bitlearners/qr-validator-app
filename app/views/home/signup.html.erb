@@ -1,21 +1,29 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-8 offset-2">
-      <h2 class="text-center mb-4" style="color: #6562df;">Create New Account</h2>
-      <%= form_with url: signup_path, method: :post do |f| %>
-        <div class="mb-3">
-          <%= f.label :email, class:'form-label'%>
-          <%= f.text_field :email, type: "email", autofocus: "true", required: "true", class:"form-control" %>
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+<main class="container-fluid h-100">
+  <div class="row h-100">
+
+
+      <div class="col-11 col-sm-11 col-md-6 col-lg-5 col-xl-3 mx-auto align-self-center py-4">
+          <h2 class="text-center mb-4"><span class="text-secondary fw-light">Create</span><br />new account</h2>
+            <%= form_with url: signup_path, method: :post do |f| %>
+                <div class="form-floating mb-3">
+                  <%= f.label :email, class: "form-label" %>
+                  <%= f.text_field :email, type: "email", autofocus: "true", required: "true", class:"form-control" %>
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+
+                <div class="form-floating mb-3">
+                <%= f.label :name, class:"form-label"%>
+                <%= f.text_field :name, type: "test", required: "true", class:"form-control" %>
+              </div>      
+                <div class="form-floating mb-3">
+                  <%= f.label :password, class:"form-label"%>
+                  <%= f.text_field :password, type: "password", required: "true", class:"form-control" %>
+                </div>
+                <%= f.submit "Signup", class:"btn btn-default btn-lg rounded-0" %>
+            <% end %>
+            <br><br>
+            <p class="text-center"><%= link_to "Existing User? Login", login_path %></p>
         </div>
-        <div class="mb-3">
-          <%= f.label :password, class:'form-label'%>
-          <%= f.text_field :password, type: "password", required: "true", class:"form-control" %>
-        </div>
-        <%= f.submit "Signup", class:'btn btn-primary', style:"background-color: #6562df;" %>
-      <% end %>
-      <br><br>
-      <p class="text-center"><%= link_to "Existing User? Login", login_path %></p>
-    </div>
   </div>
-</div>
+
+</main>
