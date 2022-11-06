@@ -7,7 +7,7 @@ class QrCodesController < QrCodesBaseController
     #render(partial: "scan_status", locals: @valid_status )
   end
 
-  def test; end
+  def profile; end
 
   def validate
     #puts params["data"]
@@ -23,6 +23,14 @@ class QrCodesController < QrCodesBaseController
     return mark_as_arrived if valid
     puts "Invalid Ticket QR" if !valid
 
+  end
+
+
+  def fetch_data
+    {
+      name: "Noman",
+      age: "xx"
+    }
   end
 
 end

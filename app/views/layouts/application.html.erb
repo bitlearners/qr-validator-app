@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>QrScannerApp</title>
+    <title>Ticket Scanner v1.0</title>
 
     <%= render 'home/header' %>
   </head>
@@ -13,13 +13,13 @@
     </header>
 
     <% if current_user %>
-       <%= link_to "Logout", logout_path, class:'nav-link login-status' %>
     <% end %>
     <main class="wrapper" style="padding-top:0em">
       <%= yield %>
     </main>
 
 
+    <%= render 'home/footer' %>
 </body>
 
 </html>

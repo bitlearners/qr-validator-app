@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post '/signup', to: 'home#signup'
   
   root to: 'qr_codes#index'
+  get 'profile', to: 'qr_codes#profile'
+  get 'qr_data', to: 'qr_code#fetch_data'
   
   get 'qr_reader', to: 'qr_codes#index'
   get 'test', to: 'qr_codes#test'

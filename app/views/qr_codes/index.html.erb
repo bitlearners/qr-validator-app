@@ -1,169 +1,66 @@
 
-    <!-- Sidebar main menu -->
-    <div class="sidebar-wrap  sidebar-overlay square-sidebar">
-        <!-- Add pushcontent or fullmenu instead pushcontent-->
-        <div class="closemenu text-secondary">Close Menu</div>
-        <div class="sidebar ">
-            <!-- user information -->
-            <div class="row">
-                <div class="col-12 profile-sidebar mb-0">
-                    <div class="row">
-                        <div class="col-auto">
-                            <figure class="avatar avatar-110 rounded-0 shadow-sm p-0 bg-white">
-                                <%= image_tag(src="user1.jpg", class: "rounded-0") %>
-                            </figure>
-                        </div>
-                        <div class="col px-0 align-self-center">
-                            <h5 class="mb-2">John Winsels</h5>
-                            <p class="text-muted size-12">New York City,<br />United States</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Begin page -->
+<main class="h-100 theme-light-radial-gradient">
 
-            <!-- user menu navigation -->
-            <div class="row mx-0">
-                <div class="col-12 px-0">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.html">
-                                <div class="avatar avatar-40 icon"><i class="bi bi-house-door"></i></div>
-                                <div class="col">Home</div>
-                                <div class="arrow"><i class="bi bi-chevron-right"></i></div>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                <div class="avatar avatar-40 icon"><i class="bi bi-cash-stack"></i></div>
-                                <div class="col">Finance</div>
-                                <div class="arrow"><i class="bi bi-chevron-down plus"></i> <i class="bi bi-chevron-up minus"></i>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item nav-link" href="bills.html">
-                                        <div class="avatar avatar-40 icon"><i class="bi bi-receipt"></i>
-                                        </div>
-                                        <div class="col align-self-center">Bills</div>
-                                        <div class="arrow"><i class="bi bi-chevron-right"></i></div>
-                                    </a>
-                                </li>
-                               
-                               
-                               
-                              
-                            </ul>
-                        </li>
-                    
-                        
-                        <l  i class="nav-item">
-                            <a class="nav-link" href="signin.html" tabindex="-1">
-                                <div class="avatar avatar-40 icon"><i class="bi bi-box-arrow-right"></i></div>
-                                <div class="col">Logout</div>
-                                <div class="arrow"><i class="bi bi-chevron-right"></i></div>
-                            </a>
-                        </li>
-                    </ul>
+    <!-- main page content -->
+    <div class="main-container container">
+        <!-- banner -->
+        <div class="row">
+            <div class="col-12 mb-3 text-center ticket-scan-status"> <!-- Ticket scan status-->
+                <h2 class="mb-3 text-secondary fw-light" id="scan_status" height=200px></h2>
+
+                <div class="row mb-3" id="qr_container">
+                        <%= video_tag("", id: "qr_vid_el") %>
                 </div>
+                <p class="text-secondary mb-3" id="result"></p>
             </div>
         </div>
+
+
+        <div id="sourceSelectPanel" style="display: none">
+          <label for="sourceSelect">Change video source:</label>
+          <select id="sourceSelect" style="max-width:400px">
+          </select>
+        </div>
+
+        <div style="display: none">
+          <select id="decoding-style" size="1">
+            <option value="once" selected>Decode once</option>
+            <option value="continuously">Decode continuously</option>
+          </select>
+        </div>
+
+
+        <!-- Main Screen QR content -->
+        <div class=" buttons-container">
+
+            <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+                <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
+                    <i class="bi bi-x-square scan-fun-btn h2" id="resetButton"></i> 
+                </span>
+                <h6>Cancel</h6>
+            </div>
+
+            <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+                <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
+                    <i class="bi bi-qr-code-scan scan-fun-btn h2" id="startButton"></i>
+                </span>
+                <h6>Scan Again</h6>
+            </div>
+
+            <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+                <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
+                    <i class="bi bi-check-square scan-fun-btn h2" id="approveButton"></i> 
+                </span>
+                <h6>Approve</h6>
+            </div>
+        </div>
+
     </div>
-    <!-- Sidebar main menu ends -->
+    <!-- main page content ends -->
 
-    <!-- Begin page -->
-    <main class="h-100 theme-light-radial-gradient">
-
-        <!-- Header -->
-        <header class="header position-fixed header-filled rounded-0 shadow-none">
-            <div class="row">
-                <!--
-                <div class="col-autow">
-                    <button type="button" class="btn btn-light btn-44 menu-btn">
-                        <i class="bi bi-list"></i>
-                    </button>
-                </div>
-                -->
-                <div class="cole">
-                    <div class="logo-small">
-
-                        <%= image_tag(src="logo.png", class: "shadow-none") %>          
-                        <h5>Ticket<br /><span class="text-muted fw-light">Scanner</span></h5>
-                    </div>
-                </div>
-                <!--
-                <div class="col-autod">
-                    <a href="notifications.html" target="_self" class="btn btn-light btn-44">
-                        <i class="bi bi-bell"></i>
-                        <span class="count-indicator"></span>
-                    </a>
-                    <a href="profile.html" target="_self" class="btn btn-light btn-44 ms-2">
-                        <i class="bi bi-person-circle"></i>
-                    </a>
-                </div> 
-                -->
-            </div>
-        </header>
-        <!-- Header ends -->
-
-        <!-- main page content -->
-        <div class="main-container container">
-            <!-- banner -->
-            <div class="row">
-                <div class="col-12 mb-3 text-center ticket-scan-status"> <!-- Ticket scan status-->
-                    <h2 class="mb-3 text-secondary fw-light" id="scan_status" height=200px></h2>
-
-                    <div class="row mb-3" id="qr_container">
-                            <%= video_tag("", id: "qr_vid_el") %>
-                    </div>
-                    <p class="text-secondary mb-3" id="result">Ask to scan this QR-Code<br>to accept money</p>
-                </div>
-            </div>
-
-
-            <div id="sourceSelectPanel" style="display: none">
-              <label for="sourceSelect">Change video source:</label>
-              <select id="sourceSelect" style="max-width:400px">
-              </select>
-            </div>
-
-            <div style="display: none">
-              <select id="decoding-style" size="1">
-                <option value="once" selected>Decode once</option>
-                <option value="continuously">Decode continuously</option>
-              </select>
-            </div>
-
-
-            <!-- Main Screen QR content -->
-            <div class=" buttons-container">
-
-                <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
-                    <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
-                        <i class="bi bi-x-square scan-fun-btn h2" id="resetButton"></i> 
-                    </span>
-                    <h6>Cancel</h6>
-                </div>
-
-                <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
-                    <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
-                        <i class="bi bi-qr-code-scan scan-fun-btn h2" id="startButton"></i>
-                    </span>
-                    <h6>Scan Again</h6>
-                </div>
-
-                <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
-                    <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
-                        <i class="bi bi-check-square scan-fun-btn h2" id="approveButton"></i> 
-                    </span>
-                    <h6>Approve</h6>
-                </div>
-            </div>
-
-        </div>
-        <!-- main page content ends -->
-
-    </main>
-    <!-- Page ends-->
+</main>
+<!-- Page ends-->
 
 <style type="text/css">
 
@@ -176,13 +73,12 @@
     border-radius: 15px;
 }
 
-
-
 .ticket-scan-status{
-    margin-top: 50px;
-    min-height: 2em;
+    margin-top: 100px;
     display: block;
+    min-height: 2em;
 }
+
 #scan_status{
 }
  .buttons-container{
@@ -196,85 +92,9 @@
 </style>
 
 
-    <!-- Footer -->
-    <footer class="footer footer-squared">
-        <div class="container">
-            <ul class="nav nav-pills nav-justified">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>
-                            <i class="nav-icon bi bi-house"></i>
-                            <span class="nav-text">Home</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>
-                            <i class="nav-icon bi bi-bar-chart"></i>
-                            <span class="nav-text">Statistics</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item square-footerbtn">
-                    <a href="#" class="nav-link  active" id="centermenubtn">
-                        <span class="bg-theme">
-                            <i class="bi bi-camera-fill size-22"></i>
-                            <span class="nav-text">Scan</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>
-                            <i class="nav-icon bi bi-list-task"></i>
-                            <span class="nav-text">History</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>
-                            <i class="nav-icon bi bi-person-circle"></i>
-                            <span class="nav-text">Profile</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </footer>
-    <!-- Footer ends-->
-<!-- PWA app install toast message -->
-    <div class="position-fixed bottom-0 start-50 translate-middle-x  z-index-99">
-        <div class="toast rounded-6 mb-3 overflow-hidden" role="alert" aria-live="assertive" aria-atomic="true" id="toastinstall" data-bs-animation="true">
-            <div class="toast-header">
-              
-                <%= image_tag("favicon32.png", class: "rounded me-2") %>
-                <strong class="me-auto">Install PWA App</strong>
-                <small>now</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                <div class="row">
-                    <div class="col">
-                        Click "Install" to install PWA app & experience indepedent.
-                    </div>
-                    <div class="col-auto align-self-center ps-0">
-
-                    </div>
-                </div>
-            </div>
-            <button class="btn-default btn btn-lg rounded-0 w-100" id="addtohome">Install</button>
-        </div>
-    </div>
-
-
-<script type="text/javascript" async>
-  let selectedDeviceId;
-  let codeReader;
-
-
-  document.getElementById('qr_vid_el').addEventListener('unload', reset_qr_feed );
+<script type="text/javascript" >
+  
+  //document.getElementById('qr_vid_el').addEventListener('unload', reset_qr_feed );
 
   function decodeOnce(codeReader, selectedDeviceId) {
     codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'qr_vid_el').then((result) => {
@@ -290,51 +110,49 @@
         success: function(repsonse){ console.log("POST Success") },
         error: function(repsonse){ console.log("POST fail") }
       })
-
+       
     }).catch((err) => {
       console.error(err)
       document.getElementById('result').textContent = err
     })
   }
 
-  function reset_qr_feed() {
+  function reset_qr_feed(codeReader) {
     codeReader.reset()
     document.getElementById('result').textContent = '';
-    console.log('Reset.')
+    console.log('Reset.');
   }
 
-  function start_qr_feed() {
+  function start_qr_feed(selectedDeviceId, codeReader) {
     const decodingStyle = document.getElementById('decoding-style').value;
     document.getElementById('result').textContent = '';
     document.getElementById('scan_status').textContent = '';
 
-    if (decodingStyle == "once") {
-      decodeOnce(codeReader, selectedDeviceId);
-    } else {
-      decodeContinuously(codeReader, selectedDeviceId);
-    }
+    decodeOnce(codeReader, selectedDeviceId);
+    
 
     //console.log(`Started decode from camera with id ${selectedDeviceId}`);
     console.log('Started decode from camera');
   }
 
-  window.addEventListener('load', process() );
-  //$(document).on('page:change', process() );
+  window.addEventListener('load', process );
 
+  window.addEventListener('unload', function (){
+    console.log("page left") ;
+  } );
+
+  // main function
   function process(){
     //const codeReader = new ZXing.BrowserQRCodeReader();
+    //location.reload();
+    let selectedDeviceId;
+    let codeReader;
     console.log('code reader initialized');
     codeReader = new ZXing.BrowserQRCodeReader();
     console.log('code reader initialized');
 
-    const decodingStyle = document.getElementById('decoding-style').value;
-
-    if (decodingStyle == "once") {
-      decodeOnce(codeReader, selectedDeviceId);
-    } else {
-      decodeContinuously(codeReader, selectedDeviceId);
-    }
-
+    decodeOnce(codeReader, selectedDeviceId);
+    
     //console.log(`Started decode from camera with id ${selectedDeviceId}`);
     console.log('Started decode from camera');
 
@@ -360,11 +178,11 @@
         }
 
         document.getElementById('startButton').addEventListener('click', () => {
-          start_qr_feed();
+          start_qr_feed(selectedDeviceId, codeReader);
         })
 
         document.getElementById('resetButton').addEventListener('click', () => {
-          reset_qr_feed() ;
+          reset_qr_feed(codeReader) ;
         })
 
       })
@@ -374,39 +192,4 @@
    
   }
 
-  //$(document).on("page:before-render", reset_qr_feed() );
-  //window.onbeforeunload = reset_qr_feed ;
-/* PWA add to phone Install ap button */
-
-            /* app install toast message */
-            var toastElList = document.getElementById('toastinstall');
-            var toastElinit = new bootstrap.Toast(toastElList, {
-                // autohide: "!1",
-                autohide: true,
-                delay: 5000,
-            });
-            toastElinit.show();
-
-
-var btnAdd = document.getElementById('addtohome');
-var defferedPrompt;
-window.addEventListener("beforeinstallprompt", function (event) {
-    event.preventDefault();
-    defferedPrompt = event;
-
-    btnAdd.addEventListener("click", function (event) {
-        console.log("Somethingh")
-        defferedPrompt.prompt();
-
-
-        defferedPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the A2HS prompt');
-            } else {
-                console.log('User dismissed the A2HS prompt');
-            }
-            defferedPrompt = null;
-        });
-    });
-});
 </script>
