@@ -9,3 +9,6 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 #pin "@rails/ujs", to: "@rails--ujs.js" # @7.0.4
 pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.6.1/dist/jquery.js"
 #pin_all_from "app/javascript/packs", under: "packs"
+
+
+#pin "@app_js", to: "app/javascript/app.js", preload: true

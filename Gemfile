@@ -22,6 +22,7 @@ gem "stimulus-rails"
 
 gem "jbuilder"
 
+gem 'serviceworker-rails'
 
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 

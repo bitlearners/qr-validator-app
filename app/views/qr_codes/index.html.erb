@@ -166,9 +166,33 @@
     <!-- Page ends-->
 
 <style type="text/css">
-#qr_container {
 
+#qr_container{
+  width: 200px;
+  height: 200px;
+  margin: 10px auto;
+  display: block;
+    border: 5px solid red;
+    border-radius: 15px;
 }
+
+
+
+.ticket-scan-status{
+    margin-top: 50px;
+    min-height: 2em;
+    display: block;
+}
+#scan_status{
+}
+ .buttons-container{
+    display:  flex;
+    flex-flow: row;
+    justify-content: center;
+    margin: 30px 0px;
+    padding:  0px;
+ }
+
 </style>
 
 
@@ -220,6 +244,30 @@
         </div>
     </footer>
     <!-- Footer ends-->
+<!-- PWA app install toast message -->
+    <div class="position-fixed bottom-0 start-50 translate-middle-x  z-index-99">
+        <div class="toast rounded-6 mb-3 overflow-hidden" role="alert" aria-live="assertive" aria-atomic="true" id="toastinstall" data-bs-animation="true">
+            <div class="toast-header">
+              
+                <%= image_tag("favicon32.png", class: "rounded me-2") %>
+                <strong class="me-auto">Install PWA App</strong>
+                <small>now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <div class="row">
+                    <div class="col">
+                        Click "Install" to install PWA app & experience indepedent.
+                    </div>
+                    <div class="col-auto align-self-center ps-0">
+
+                    </div>
+                </div>
+            </div>
+            <button class="btn-default btn btn-lg rounded-0 w-100" id="addtohome">Install</button>
+        </div>
+    </div>
+
 
 <script type="text/javascript" async>
   let selectedDeviceId;
@@ -328,5 +376,37 @@
 
   //$(document).on("page:before-render", reset_qr_feed() );
   //window.onbeforeunload = reset_qr_feed ;
+/* PWA add to phone Install ap button */
 
+            /* app install toast message */
+            var toastElList = document.getElementById('toastinstall');
+            var toastElinit = new bootstrap.Toast(toastElList, {
+                // autohide: "!1",
+                autohide: true,
+                delay: 5000,
+            });
+            toastElinit.show();
+
+
+var btnAdd = document.getElementById('addtohome');
+var defferedPrompt;
+window.addEventListener("beforeinstallprompt", function (event) {
+    event.preventDefault();
+    defferedPrompt = event;
+
+    btnAdd.addEventListener("click", function (event) {
+        console.log("Somethingh")
+        defferedPrompt.prompt();
+
+
+        defferedPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the A2HS prompt');
+            } else {
+                console.log('User dismissed the A2HS prompt');
+            }
+            defferedPrompt = null;
+        });
+    });
+});
 </script>

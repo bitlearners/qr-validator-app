@@ -18,5 +18,11 @@ module QrScannerApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    #config.serviceworker.routes.draw do
+    #  match "/serviceworker.js" => "nested/directory/serviceworker.js"
+    #end
+
   end
 end
+

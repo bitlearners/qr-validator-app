@@ -4,8 +4,8 @@ if ("serviceWorker" in navigator) {
     window.addEventListener("load", function (event) {
         navigator.serviceWorker
             // .register("././serviceWorker.js", {
-            .register("https://maxartkiller.com/website/oneuiux2/HTML/finance/serviceWorker.js", {
-                scope: './'
+            .register("serviceWorker.js", {
+                scope: '.'
             })
             .then(reg => console.log("service worker registered"))
             .catch(err => console.log("service worker not registered"));
