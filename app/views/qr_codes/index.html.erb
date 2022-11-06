@@ -1,35 +1,225 @@
-<section class="container" id="demo-content">
 
-<h1 class="title">Scan QR Code </h1>    
+    <!-- Sidebar main menu -->
+    <div class="sidebar-wrap  sidebar-overlay square-sidebar">
+        <!-- Add pushcontent or fullmenu instead pushcontent-->
+        <div class="closemenu text-secondary">Close Menu</div>
+        <div class="sidebar ">
+            <!-- user information -->
+            <div class="row">
+                <div class="col-12 profile-sidebar mb-0">
+                    <div class="row">
+                        <div class="col-auto">
+                            <figure class="avatar avatar-110 rounded-0 shadow-sm p-0 bg-white">
+                                <%= image_tag(src="user1.jpg", class: "rounded-0") %>
+                            </figure>
+                        </div>
+                        <div class="col px-0 align-self-center">
+                            <h5 class="mb-2">John Winsels</h5>
+                            <p class="text-muted size-12">New York City,<br />United States</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<p id="scan_status"></p>
+            <!-- user menu navigation -->
+            <div class="row mx-0">
+                <div class="col-12 px-0">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="index.html">
+                                <div class="avatar avatar-40 icon"><i class="bi bi-house-door"></i></div>
+                                <div class="col">Home</div>
+                                <div class="arrow"><i class="bi bi-chevron-right"></i></div>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                <div class="avatar avatar-40 icon"><i class="bi bi-cash-stack"></i></div>
+                                <div class="col">Finance</div>
+                                <div class="arrow"><i class="bi bi-chevron-down plus"></i> <i class="bi bi-chevron-up minus"></i>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item nav-link" href="bills.html">
+                                        <div class="avatar avatar-40 icon"><i class="bi bi-receipt"></i>
+                                        </div>
+                                        <div class="col align-self-center">Bills</div>
+                                        <div class="arrow"><i class="bi bi-chevron-right"></i></div>
+                                    </a>
+                                </li>
+                               
+                               
+                               
+                              
+                            </ul>
+                        </li>
+                    
+                        
+                        <l  i class="nav-item">
+                            <a class="nav-link" href="signin.html" tabindex="-1">
+                                <div class="avatar avatar-40 icon"><i class="bi bi-box-arrow-right"></i></div>
+                                <div class="col">Logout</div>
+                                <div class="arrow"><i class="bi bi-chevron-right"></i></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sidebar main menu ends -->
 
-<div id="qr_container">
-  <video id="qr_vid_el"> </video>
-</div>
+    <!-- Begin page -->
+    <main class="h-100 theme-light-radial-gradient">
 
-<div>
-  <a class="button" id="resetButton">cancel</a>
-  <a class="button" id="startButton">Re-scan</a>
-  <a class="button" id="approveButton">Approve</a>
-</div>
+        <!-- Header -->
+        <header class="header position-fixed header-filled rounded-0 shadow-none">
+            <div class="row">
+                <!--
+                <div class="col-autow">
+                    <button type="button" class="btn btn-light btn-44 menu-btn">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+                -->
+                <div class="cole">
+                    <div class="logo-small">
+
+                        <%= image_tag(src="logo.png", class: "shadow-none") %>          
+                        <h5>Ticket<br /><span class="text-muted fw-light">Scanner</span></h5>
+                    </div>
+                </div>
+                <!--
+                <div class="col-autod">
+                    <a href="notifications.html" target="_self" class="btn btn-light btn-44">
+                        <i class="bi bi-bell"></i>
+                        <span class="count-indicator"></span>
+                    </a>
+                    <a href="profile.html" target="_self" class="btn btn-light btn-44 ms-2">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                </div> 
+                -->
+            </div>
+        </header>
+        <!-- Header ends -->
+
+        <!-- main page content -->
+        <div class="main-container container">
+            <!-- banner -->
+            <div class="row">
+                <div class="col-12 mb-3 text-center ticket-scan-status"> <!-- Ticket scan status-->
+                    <h2 class="mb-3 text-secondary fw-light" id="scan_status" height=200px></h2>
+
+                    <div class="row mb-3" id="qr_container">
+                            <%= video_tag("", id: "qr_vid_el") %>
+                    </div>
+                    <p class="text-secondary mb-3" id="result">Ask to scan this QR-Code<br>to accept money</p>
+                </div>
+            </div>
 
 
-<div id="sourceSelectPanel" style="display:none">
-  <label for="sourceSelect">Change video source:</label>
-  <select id="sourceSelect" style="max-width:400px">
-  </select>
-</div>
+            <div id="sourceSelectPanel" style="display: none">
+              <label for="sourceSelect">Change video source:</label>
+              <select id="sourceSelect" style="max-width:400px">
+              </select>
+            </div>
 
-<div style="display: none">
-  <select id="decoding-style" size="1">
-    <option value="once" selected>Decode once</option>
-    <option value="continuously">Decode continuously</option>
-  </select>
-</div>
+            <div style="display: none">
+              <select id="decoding-style" size="1">
+                <option value="once" selected>Decode once</option>
+                <option value="continuously">Decode continuously</option>
+              </select>
+            </div>
 
-<label>Result:</label>
-<pre><code id="result"></code></pre>
+
+            <!-- Main Screen QR content -->
+            <div class=" buttons-container">
+
+                <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+                    <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
+                        <i class="bi bi-x-square scan-fun-btn h2" id="resetButton"></i> 
+                    </span>
+                    <h6>Cancel</h6>
+                </div>
+
+                <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+                    <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
+                        <i class="bi bi-qr-code-scan scan-fun-btn h2" id="startButton"></i>
+                    </span>
+                    <h6>Scan Again</h6>
+                </div>
+
+                <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+                    <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
+                        <i class="bi bi-check-square scan-fun-btn h2" id="approveButton"></i> 
+                    </span>
+                    <h6>Approve</h6>
+                </div>
+            </div>
+
+        </div>
+        <!-- main page content ends -->
+
+    </main>
+    <!-- Page ends-->
+
+<style type="text/css">
+#qr_container {
+
+}
+</style>
+
+
+    <!-- Footer -->
+    <footer class="footer footer-squared">
+        <div class="container">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span>
+                            <i class="nav-icon bi bi-house"></i>
+                            <span class="nav-text">Home</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span>
+                            <i class="nav-icon bi bi-bar-chart"></i>
+                            <span class="nav-text">Statistics</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item square-footerbtn">
+                    <a href="#" class="nav-link  active" id="centermenubtn">
+                        <span class="bg-theme">
+                            <i class="bi bi-camera-fill size-22"></i>
+                            <span class="nav-text">Scan</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span>
+                            <i class="nav-icon bi bi-list-task"></i>
+                            <span class="nav-text">History</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span>
+                            <i class="nav-icon bi bi-person-circle"></i>
+                            <span class="nav-text">Profile</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <!-- Footer ends-->
 
 <script type="text/javascript" async>
   let selectedDeviceId;
@@ -118,7 +308,7 @@
           };
 
           const sourceSelectPanel = document.getElementById('sourceSelectPanel')
-          sourceSelectPanel.style.display = 'block'
+          sourceSelectPanel.style.display = 'none'
         }
 
         document.getElementById('startButton').addEventListener('click', () => {
@@ -140,4 +330,3 @@
   //window.onbeforeunload = reset_qr_feed ;
 
 </script>
-</section>

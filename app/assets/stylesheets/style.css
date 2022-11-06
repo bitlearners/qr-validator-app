@@ -15328,10 +15328,26 @@ a.card {
   padding-right: 0;
 }/*# sourceMappingURL=style.css.map */
 
-.buttons-container{
-  margin: 230px 0px;
+.scan-fun-btn{
+  font-size: 40px;
 }
 
-.scan-fun-btn{
-  font-size: 20px;
+.ticket-scan-status{
+    margin-top: 100px;
+    min-height: 2em;
+    display: block;
 }
+#scan_status{
+}
+ .buttons-container{
+    display:  flex;
+    flex-flow: row;
+    justify-content: center;
+    margin: 70px 0px;
+    padding:  0px;
+ }
+ .buttons-container div{
+  width: 32%;
+}
+
+

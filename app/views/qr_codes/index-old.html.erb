@@ -1,0 +1,143 @@
+<section class="container" id="demo-content">
+
+<h1 class="title">Scan QR Code </h1>    
+
+<p id="scan_status"></p>
+
+<div id="qr_container">
+  <video id="qr_vid_el"> </video>
+</div>
+
+<div>
+  <a class="button" id="resetButton">cancel</a>
+  <a class="button" id="startButton">Re-scan</a>
+  <a class="button" id="approveButton">Approve</a>
+</div>
+
+
+<div id="sourceSelectPanel" style="display:none">
+  <label for="sourceSelect">Change video source:</label>
+  <select id="sourceSelect" style="max-width:400px">
+  </select>
+</div>
+
+<div style="display: none">
+  <select id="decoding-style" size="1">
+    <option value="once" selected>Decode once</option>
+    <option value="continuously">Decode continuously</option>
+  </select>
+</div>
+
+<label>Result:</label>
+<pre><code id="result"></code></pre>
+
+<script type="text/javascript" async>
+  let selectedDeviceId;
+  let codeReader;
+
+
+  document.getElementById('qr_vid_el').addEventListener('unload', reset_qr_feed );
+
+  function decodeOnce(codeReader, selectedDeviceId) {
+    codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'qr_vid_el').then((result) => {
+      console.log(result)
+      reset_qr_feed()
+      document.getElementById('result').textContent = result.text
+      payload = {"data": result.text}
+
+      $.ajax({
+        type: "POST",
+        url: "/qr_validate",
+        data: payload,
+        success: function(repsonse){ console.log("POST Success") },
+        error: function(repsonse){ console.log("POST fail") }
+      })
+
+    }).catch((err) => {
+      console.error(err)
+      document.getElementById('result').textContent = err
+    })
+  }
+
+  function reset_qr_feed() {
+    codeReader.reset()
+    document.getElementById('result').textContent = '';
+    console.log('Reset.')
+  }
+
+  function start_qr_feed() {
+    const decodingStyle = document.getElementById('decoding-style').value;
+    document.getElementById('result').textContent = '';
+    document.getElementById('scan_status').textContent = '';
+
+    if (decodingStyle == "once") {
+      decodeOnce(codeReader, selectedDeviceId);
+    } else {
+      decodeContinuously(codeReader, selectedDeviceId);
+    }
+
+    //console.log(`Started decode from camera with id ${selectedDeviceId}`);
+    console.log('Started decode from camera');
+  }
+
+  window.addEventListener('load', process() );
+  //$(document).on('page:change', process() );
+
+  function process(){
+    //const codeReader = new ZXing.BrowserQRCodeReader();
+    console.log('code reader initialized');
+    codeReader = new ZXing.BrowserQRCodeReader();
+    console.log('code reader initialized');
+
+    const decodingStyle = document.getElementById('decoding-style').value;
+
+    if (decodingStyle == "once") {
+      decodeOnce(codeReader, selectedDeviceId);
+    } else {
+      decodeContinuously(codeReader, selectedDeviceId);
+    }
+
+    //console.log(`Started decode from camera with id ${selectedDeviceId}`);
+    console.log('Started decode from camera');
+
+
+    codeReader.getVideoInputDevices()
+      .then((videoInputDevices) => {
+        const sourceSelect = document.getElementById('sourceSelect')
+        selectedDeviceId = videoInputDevices[0].deviceId
+        if (videoInputDevices.length >= 1) {
+          videoInputDevices.forEach((element) => {
+            const sourceOption = document.createElement('option')
+            sourceOption.text = element.label
+            sourceOption.value = element.deviceId
+            sourceSelect.appendChild(sourceOption)
+          })
+
+          sourceSelect.onchange = () => {
+            selectedDeviceId = sourceSelect.value;
+          };
+
+          const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+          sourceSelectPanel.style.display = 'block'
+        }
+
+        document.getElementById('startButton').addEventListener('click', () => {
+          start_qr_feed();
+        })
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+          reset_qr_feed() ;
+        })
+
+      })
+      .catch((err) => {
+        console.error(`main error \n ${err}`)
+      })
+   
+  }
+
+  //$(document).on("page:before-render", reset_qr_feed() );
+  //window.onbeforeunload = reset_qr_feed ;
+
+</script>
+</section>
