@@ -1,5 +1,4 @@
 
-
         <!-- main page content -->
         <div class="main-container container">
             <!-- popular shopping  -->
@@ -22,7 +21,7 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-auto ml-6">
-
+                                            <%= image_tag('red-colored_qr.png') %>
                                         </div>
 
                                         <div class="col align-self-center ps-0">
@@ -42,7 +41,7 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-auto ml-6">
-
+                                            <%= image_tag('orange-colored_qr.png') %>
                                         </div>
 
                                         <div class="col align-self-center ps-0">
@@ -62,7 +61,7 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-auto ml-6">
-
+                                            <%= image_tag('green-colored_qr.png') %>
                                         </div>
 
                                         <div class="col align-self-center ps-0">
@@ -114,3 +113,49 @@
     <!-- Page ends-->
 
     
+<!-- Footer -->
+<footer class="footer footer-squared">
+    <div class="container">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item">
+                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                    <span>
+                        <i class="nav-icon bi bi-person-circle"></i>
+                        <span class="nav-text">Profile</span>
+                    </span>
+                <% end %>
+
+            </li>
+
+            <li class="nav-item">
+                <a class= "nav-link", style="text-decoration: none;" onclick=changePage("<%= scanner_url %>")>
+                    <span class="">
+                        <i class="bi bi-camera-fill"></i>
+                        <span class="nav-text">Scan</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item square-footerbtn">
+                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                    <span class="bg-theme">
+                        <i class="bi bi-list-task size-22"></i>
+                        <span class="nav-text">History</span>
+                    </span>
+                  <% end %>
+                
+            </li>
+
+            <li class="nav-item">
+                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                    <span>
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <span class="nav-text">Settings</span>
+                    </span>
+                <% end %>
+            </li>
+
+        </ul>
+    </div>
+</footer>
+<!-- Footer ends-->

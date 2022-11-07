@@ -1,46 +1,24 @@
- <!-- Begin page -->
+<!-- Begin page -->
 <main class="h-100 theme-light-radial-gradient">
-    <!-- Header ends -->
     <!-- main page content -->
     <div class="main-container container">
         <div class="row" style="width: 100%, display: block;" >
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card mb-4 shadow-sm p-2 bg-theme">
-                    <div class="card-body text-center shadow-sm rounded-6 bg-white text-dark ">
-                        <div class="row align-items-center ">
-                            <a href="profile.html" class="col-auto mx-auto">
-                                <div class="card mb-3">
-                                    <div class="card-body p-0">
-                                        <figure class="avatar avatar-100 mx-auto rounded-6">
-                                            <%= image_tag("user1.jpg") %>
-                                        </figure>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <h6 class="card-title mb-0 text-color-theme text-center">
-                          <%= user.name %>
-                        </h6>
-                        <p class="text-small text-secondary small">Scanner</p>
-                    </div>
-                </div>
-               <%= link_to "Logout", logout_path, class:"btn btn-primary", style:"width: 100px; display: block; margin: 0 auto ;", type: "submit" %>     
-            </div>
+            
+            <h2 class="text-center">Settings</h2>
         </div>
-        <!-- People -->
+    <!-- People -->
 </main>
 <!-- Page ends-->
-
 
 
 <!-- Footer -->
 <footer class="footer footer-squared">
     <div class="container">
         <ul class="nav nav-pills nav-justified">
-            <li class="nav-item square-footerbtn">
+            <li class="nav-item">
                 <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
-                    <span class="bg-theme">
-                        <i class="bi bi-person-circle size-22"></i>
+                    <span>
+                        <i class="nav-icon bi bi-person-circle"></i>
                         <span class="nav-text">Profile</span>
                     </span>
                 <% end %>
@@ -66,10 +44,10 @@
                 
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item square-footerbtn">
                 <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
-                    <span>
-                        <i class="nav-icon bi bi-gear-fill"></i>
+                    <span class="bg-theme">
+                        <i class="bi bi-gear-fill size-22"></i>
                         <span class="nav-text">Settings</span>
                     </span>
                 <% end %>

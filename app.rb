@@ -27,6 +27,7 @@ module App
     def connect_firebase_instances(instances)
       instances.each do |config|
         self.class.send(:attr_reader, :"#{config[:instance]}")
+        
         instance_variable_set(:"@#{config[:instance]}", Qr::Firebase.new(config))
       end
     end

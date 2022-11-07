@@ -7,7 +7,7 @@
         <!-- banner -->
         <div class="row">
             <div class="col-12 mb-3 text-center ticket-scan-status"> <!-- Ticket scan status-->
-                <h2 class="mb-3 text-secondary fw-light" id="scan_status" height=200px></h2>
+                <p class="mb-3 text-secondary fw-light" id="scan_status"></p>
 
                 <div class="row mb-3" id="qr_container">
                         <%= video_tag("", id: "qr_vid_el") %>
@@ -62,44 +62,63 @@
 </main>
 <!-- Page ends-->
 
-<style type="text/css">
 
-#qr_container{
-  width: 200px;
-  height: 200px;
-  margin: 10px auto;
-  display: block;
-    border: 5px solid red;
-    border-radius: 15px;
-}
+<!-- Footer -->
+<footer class="footer footer-squared">
+    <div class="container">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item">
+                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-person-circle"></i>
+                        <span class="nav-text">Profile</span>
+                    </span>
+                <% end %>
 
-.ticket-scan-status{
-    margin-top: 100px;
-    display: block;
-    min-height: 2em;
-}
+            </li>
 
-#scan_status{
-}
- .buttons-container{
-    display:  flex;
-    flex-flow: row;
-    justify-content: center;
-    margin: 30px 0px;
-    padding:  0px;
- }
+            <li class="nav-item square-footerbtn">
+                <a class= "nav-link", style="text-decoration: none;" onclick=changePage("<%= scanner_url %>")>
+                    <span  class="bg-theme">
+                        <i class="bi bi-camera-fill size-22"></i>
+                        <span class="nav-text">Scan</span>
+                    </span>
+                </a>
+            </li>
 
-</style>
+            <li class="nav-item">
+                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-list-task"></i>
+                        <span class="nav-text">History</span>
+                    </span>
+                  <% end %>
+                
+            </li>
+
+            <li class="nav-item">
+                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <span class="nav-text">Settings</span>
+                    </span>
+                <% end %>
+            </li>
+
+        </ul>
+    </div>
+</footer>
+<!-- Footer ends-->
+
 
 
 <script type="text/javascript" >
-  
   //document.getElementById('qr_vid_el').addEventListener('unload', reset_qr_feed );
 
-  function decodeOnce(codeReader, selectedDeviceId) {
+  function decodeOnce(codeReader, selectedDeviceId=undefined) {
     codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'qr_vid_el').then((result) => {
       console.log(result)
-      reset_qr_feed()
+      reset_qr_feed(codeReader)
       document.getElementById('result').textContent = result.text
       payload = {"data": result.text}
 
@@ -112,15 +131,27 @@
       })
 
     }).catch((err) => {
+      if (err.toString().startsWith("R:") ){
+        //document.getElementById('result').textContent = "Please wait ..." ;
+        console.log("If camera doesn't start. retry");
+      }
+      else if (err.toString().includes("Failed to execute 'getImageData'") ){
+        document.getElementById('result').textContent = "Please wait ..." ;
+        process();
+      }else{
       console.error(err)
       document.getElementById('result').textContent = err
+      }
     })
+    
   }
 
   function reset_qr_feed(codeReader) {
     try{
       codeReader.reset()
-    }catch(err){}
+    }catch(err){
+      console.log(err);
+    }
     document.getElementById('result').textContent = '';
     console.log('Reset.');
   }
@@ -138,7 +169,6 @@
   }
 
   window.addEventListener('load', process );
-
   window.addEventListener('unload', function (){
     console.log("page left") ;
   } );
@@ -152,17 +182,16 @@
     console.log('code reader initialized');
     codeReader = new ZXing.BrowserQRCodeReader();
     console.log('code reader initialized');
-
+    document.getElementById('result').textContent = '';
     decodeOnce(codeReader, selectedDeviceId);
     
     //console.log(`Started decode from camera with id ${selectedDeviceId}`);
     console.log('Started decode from camera');
 
-
     codeReader.getVideoInputDevices()
       .then((videoInputDevices) => {
         const sourceSelect = document.getElementById('sourceSelect')
-        selectedDeviceId = videoInputDevices[0].deviceId
+        selectedDeviceId = undefined  ; //videoInputDevices[0].deviceId
         if (videoInputDevices.length >= 1) {
           videoInputDevices.forEach((element) => {
             const sourceOption = document.createElement('option')
@@ -172,7 +201,7 @@
           })
 
           sourceSelect.onchange = () => {
-            selectedDeviceId = sourceSelect.value;
+            selectedDeviceId = undefined; //sourceSelect.value;
           };
 
           const sourceSelectPanel = document.getElementById('sourceSelectPanel')

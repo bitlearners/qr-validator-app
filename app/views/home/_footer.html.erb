@@ -1,60 +1,12 @@
 
 
-<!-- Footer -->
-<footer class="footer footer-squared">
-    <div class="container">
-        <ul class="nav nav-pills nav-justified">
-            <li class="nav-item">
-                <a class="nav-link" href=<%=  %>>
-                    <span>
-                        <i class="nav-icon bi bi-person-circle"></i>
-                        <span class="nav-text">Profile</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
-
-                  <%= link_to  signup_path, class: "nav-link", style:"text-decoration: none;" do %>
-                    <span>
-                        <i class="nav-icon bi bi-list-task"></i>
-                        <span class="nav-text">History</span>
-                    </span>
-                  <% end %>
-                
-            </li>
-            <li class="nav-item square-footerbtn">
-                <a class= "nav-link", style="text-decoration: none;" onclick=changePage('<%= root_url %>')>
-                    <span class="bg-theme">
-                        <i class="bi bi-camera-fill size-22"></i>
-                        <span class="nav-text">Scan</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <%= link_to  signup_path, class: "nav-link", style:"text-decoration: none;" do %>
-                    <span>
-                        <i class="nav-icon bi bi-info-circle"></i>
-                        <span class="nav-text">About us</span>
-                    </span>
-                <% end %>
-            </li>
-            <li class="nav-item">
-                <%= link_to  signup_path, class: "nav-link", style:"text-decoration: none;" do %>
-                    <span>
-                        <i class="nav-icon bi bi-gear-fill"></i>
-                        <span class="nav-text">Settings</span>
-                    </span>
-                <% end %>
-            </li>
-        </ul>
-    </div>
-</footer>
-<!-- Footer ends-->
 <script type="text/javascript">
   function changePage(page_path){
     console.log(page_path);
     window.location=page_path ;
-    
+    document.getElementsByClassName("nav-item")[0].backgroundColor="red" ;
+    change_bottom_style();
   }
+
 
 </script>

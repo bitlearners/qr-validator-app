@@ -4,7 +4,7 @@ App.require_common
 
 firebase_instances = [
   {
-    instance: :task_reminder_firebase,
+    instance: :firebase,
     firebase_db_url: ENV['firebase_db_url'],
     firebase_auth_key: ENV['firebase_auth_key'],
     firebase_qr_db_root_path: ENV['firebase_qr_db_root_path'],

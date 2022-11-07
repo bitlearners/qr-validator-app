@@ -22,3 +22,51 @@
 
    
   </div>
+
+  
+<!-- Footer -->
+<footer class="footer footer-squared">
+    <div class="container">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item square-footerbtn">
+                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                    <span class="bg-theme">
+                        <i class="nav-icon bi bi-person-circle size-22"></i>
+                        <span class="nav-text">Profile</span>
+                    </span>
+                <% end %>
+
+            </li>
+
+            <li class="nav-item">
+                <a class= "nav-link", style="text-decoration: none;" onclick=changePage("<%= scanner_url %>")>
+                    <span class="">
+                        <i class="bi bi-camera-fill"></i>
+                        <span class="nav-text">Scan</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                    <span>
+                        <i class="nav-icon bi bi-list-task"></i>
+                        <span class="nav-text">History</span>
+                    </span>
+                  <% end %>
+                
+            </li>
+
+            <li class="nav-item">
+                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                    <span>
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <span class="nav-text">Settings</span>
+                    </span>
+                <% end %>
+            </li>
+
+        </ul>
+    </div>
+</footer>
+<!-- Footer ends-->

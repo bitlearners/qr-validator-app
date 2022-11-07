@@ -3,12 +3,9 @@ class QrCodesBaseController < HomeController
 	before_action :set_user_data, only: %i[signup login]
   before_action :set_task, only: %i[ show edit update destroy ]
 
-  def conn
-    @conn ||= App.task_reminder_firebase.conn
-  end
 
   def load_tasks
-    @tasks ||= conn.get("task/").body.compact
+    #@tasks ||= conn.get("task/").body.compact
     #binding.pry
   end
 
@@ -18,7 +15,7 @@ class QrCodesBaseController < HomeController
 
   def perform_validation
   	@ticket_num = params["data"]
-  	data = conn.get(ticket_num).body
+  	data = fetch_qr_data(ticket_num)            ## fetch from firebase DB
   	@qr = QrCode.new(Hash(data).with_indifferent_access)
   	puts data
   	return true unless (data.nil? || data.include?("error") )
@@ -37,11 +34,16 @@ class QrCodesBaseController < HomeController
   end
 
   # fetch total DB data from Firebase
-  def fetch_all_data
+  def fetch_all_qr_data
   end
 
   # fetch only one QR data from Firebase
-  def fetch_data
+  def fetch_qr_data(ticket_num)
+    qr_db_path = ENV["firebase_qr_db_root_path"]
+    path = qr_db_path + "/" + ticket_num
+    conn.get(path).body 
   end
+
+
 
 end

@@ -3,3 +3,4 @@ export firebase_auth_key=RRTCBZaTz3cIbLbnu7sWQkxAJ9ibh6Aly7G8Y79t
 export firebase_qr_db_root_path=QR-values
 export firebase_web_api_key=AIzaSyCdEsp2sWRyhJ1r_T4CKzNFwLHiKh-paMc
 export firebase_user_db_root_path=users
+export firebase_scanned_qr_db_root_path=QR-scanned

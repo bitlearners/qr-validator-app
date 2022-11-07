@@ -11,15 +11,20 @@ Rails.application.routes.draw do
   get '/logout', to: 'home#logout'
   post '/signup', to: 'home#signup'
   
-  root to: 'qr_codes#index'
+  root to: 'qr_codes#profile'
   get 'profile', to: 'qr_codes#profile'
-  get 'qr_data', to: 'qr_code#fetch_data'
+  get 'scanner', to: 'qr_codes#scanner'
+  get 'history', to: 'qr_codes#history'
+  get 'settings', to: 'qr_codes#settings'
+
+
+
   
   get 'qr_reader', to: 'qr_codes#index'
   get 'test', to: 'qr_codes#test'
 
   post 'qr_validate', to: 'qr_codes#validate'
-  #get 'qr_validate', to: 'qr_codes#validate_view'
+
   
   
 
