@@ -25,6 +25,7 @@ class QrCodesBaseController < HomeController
   	false
   end
 
+  
   def mark_as_arrived
     # update firebse -> qr_value -> "scanned-at"=>"cur_time", "scanned-by"=>"user-name-who-scanned", "status"=>1
     # status  0=not-arrived   1=arrived

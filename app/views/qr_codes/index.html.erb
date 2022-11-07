@@ -110,7 +110,7 @@
         success: function(repsonse){ console.log("POST Success") },
         error: function(repsonse){ console.log("POST fail") }
       })
-       
+
     }).catch((err) => {
       console.error(err)
       document.getElementById('result').textContent = err
@@ -118,7 +118,9 @@
   }
 
   function reset_qr_feed(codeReader) {
-    codeReader.reset()
+    try{
+      codeReader.reset()
+    }catch(err){}
     document.getElementById('result').textContent = '';
     console.log('Reset.');
   }
