@@ -128,11 +128,11 @@
         url: "/qr_validate",
         data: payload,
         success: function(repsonse){ 
-            console.log("POST fail") 
+            console.log("POST data to ruby Success") 
             console.log(repsonse.data) 
             update_status(repsonse.data)
         },
-        error: function(repsonse){ console.log("POST fail") }
+        error: function(repsonse){ console.log("POST data to ruby fail") }
       })
 
     }).catch((err) => {

@@ -9,7 +9,7 @@
                     <h6 class="title">Scanned Ticket History</h6>
                 </div>
                 <div class="col-auto">
-                    <small class="text-secondary">35 items</small>
+                    <small class="text-secondary">1 items</small>
                 </div>
             </div>
             <div class="row mb-4">
@@ -17,6 +17,7 @@
                     <div class="card">
                         <div class="card-body p-0">
                             <ul class="list-group list-group-flush bg-none">
+                                
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-auto">
@@ -29,16 +30,17 @@
                                             </div>
                                         </div>
                                         <div class="col align-self-center ps-0">
-                                            <p class="text-secondary size-10 mb-0">b9c30f721a9 ...</p>
-                                            <p>Coffee</p>
+                                            <p class="text-danger size-10 mb-0 qr-value-reduced">0001472f0960ba91cc8b45831d6e74f6</p>
+                                            <p class="size-12 mt-2">QR-1</p>
                                         </div>
                                         <div class="col align-self-center text-end">
-                                            <p class="text-secondary text-muted size-10 mb-0">15-10-2021 | 11:35am</p>
-                                            <p class="text-danger">-100.00</p>
+                                            <p class="text-danger size-12 mb-0">Invaid Ticket</p>
+                                            <p class="text-secondary text-muted size-10 mb-0">15-10-2021</p>
+                                            <p class="text-secondary text-muted size-10 mb-0">11:35am</p>
+                                            <p class="text-muted size-10 mb-0"><i><%= user.name[0,15] %></i></p>
                                         </div>
                                     </div>
                                 </li>
-
 
                             </ul>
                         </div>
@@ -53,13 +55,16 @@
     </main>
     <!-- Page ends-->
 
-    
+
+
+
+
 <!-- Footer -->
 <footer class="footer footer-squared">
     <div class="container">
         <ul class="nav nav-pills nav-justified">
             <li class="nav-item">
-                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;" do %>
                     <span>
                         <i class="nav-icon bi bi-person-circle"></i>
                         <span class="nav-text">Profile</span>
@@ -78,7 +83,7 @@
             </li>
 
             <li class="nav-item square-footerbtn">
-                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;" do %>
                     <span class="bg-theme">
                         <i class="bi bi-list-task size-22"></i>
                         <span class="nav-text">History</span>
@@ -88,7 +93,7 @@
             </li>
 
             <li class="nav-item">
-                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;", onclick:"change_bottom_style()" do %>
+                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;" do %>
                     <span>
                         <i class="nav-icon bi bi-gear-fill"></i>
                         <span class="nav-text">Settings</span>
@@ -101,4 +106,12 @@
 </footer>
 <!-- Footer ends-->
 
+<style type="text/css">
+
+.qr-value-reduced{
+  max-width: 110px;
+  word-wrap: break-word;
+}
+
+</style>
 
