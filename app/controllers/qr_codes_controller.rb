@@ -9,6 +9,7 @@ class QrCodesController < QrCodesBaseController
 
   def scanner
     @valid_status = "nil"
+    @invalid_qr_flag = "nil"
   end
 
   def profile
@@ -20,34 +21,29 @@ class QrCodesController < QrCodesBaseController
   def settings; end
 
   def qr_approve_ticket
-    puts @valid_status
+    #puts params
+    resp = mark_as_arrived
+    render json: {status: resp}
   end
 
   def qr_reject_ticket
-    puts @valid_status
+    resp = reject_arrive
+    render json: {status: resp}
   end
 
-
-
-
-#  def scan_status
-#    respond_to do |format|
-#      format.js {render layout: false}
-#      format.html { render 'scan_status', json: {scheduled_task_id: "scheduled_task.id"}} # I had to tell rails to use the index by default if it's a html request. 
-#    end
-#  end
 
   def validate
     #puts params["data"]
     #puts conn.get("").body
 
-    valid = perform_validation
+    valid, invalid_qr_flag = perform_validation
     @valid_status = valid
-
-    render json: {data: @valid_status} 
-    return mark_as_arrived if valid
+    @invalid_qr_flag = invalid_qr_flag
+    puts data: {valid_status: @valid_status, invalid_qr_flag: @invalid_qr_flag} 
+    render json: {data: {valid_status: @valid_status, invalid_qr_flag: @invalid_qr_flag} } 
+    #return mark_as_arrived if valid
     puts "Invalid Ticket QR" if !valid
-
+    [valid, invalid_qr_flag]
   end
 
 

@@ -8,19 +8,21 @@ function decodeOnce(codeReader, selectedDeviceId=undefined) {
     console.log('<%= @valid_status %>')
     reset_qr_feed(codeReader)
     document.getElementById('result').textContent = result.text
-    payload = {"data": result.text}
-
+    payload = {"qr_key": result.text}
+    localStorage.setItem("qr_key", result.text)
+    console.log(localStorage.getItem("qr_key"));
     $.ajax({
       type: "POST",
       url: "/qr_validate",
       data: payload,
       success: function(repsonse){ 
           console.log("POST data to ruby Success") 
-          console.log(repsonse.data)
-          if (repsonse.data==true){ show_permit_buttons() }else{
+          //console.log(repsonse.data)
+          if (repsonse.data.valid_status==true){ show_permit_buttons() }else{
           	document.getElementById('qr_container').style.borderColor = "red";
           }
-          update_status(repsonse.data)
+          update_status(repsonse.data.valid_status, repsonse.data.invalid_qr_flag) 
+
       },
       error: function(repsonse){ console.log("POST data to ruby fail") }
     })
@@ -56,39 +58,63 @@ function hide_permit_buttons() {
 }
 
 
-function update_status(status) {
-  if (status){
-      msg = "Success" ;
-  }else{
-      msg = "Failed" ;
-  }
-  document.getElementById("scan_status").textContent = msg ;
-}
+function update_status(valid_status, invalid_qr_flag) {
+	//console.log(valid_status, invalid_qr_flag) ;
+	const scan_status_el = document.getElementById("scan_status");
+	if(!invalid_qr_flag){
+	  if (valid_status==true){
+	      msg = "Success - Ticket Found" ;
+	 			scan_status_el.style = "color: green;" ;
+	  }else{
+	      msg = "Failed - Ticket Already Scaned" ;
+	 			scan_status_el.style = "color: red;" ;
+	  }
+	}else{
+		msg = "Failed - No such Ticket";
+		scan_status_el.style = "color: red;" ;
+	}
+  scan_status_el.textContent = msg ;
+}	
 
 
 function approve_ticket(){
 	// ajax call ruby action to approve ticket
+	params = {"qr_key": localStorage.getItem("qr_key")}
 	$.ajax({
       type: "POST",
       url: "/qr_approve_ticket",
-      data: "",
+      data: params,
       success: function(repsonse){ 
           console.log("approve request Success") 
-          console.log(repsonse.data) 
+          console.log(repsonse) 
+          if(repsonse.status){ 
+          	alert("Ticket has been approved") 
+          	scan_new_qr()
+          }else{
+          		console.log(repsonse)
+          	}
       },
       error: function(repsonse){ console.log("approve request fail") }
     })
 }
 
+
 function reject_ticket(){
 	// ajax call ruby action to reject ticket
+	params = {"qr_key": localStorage.getItem("qr_key")}
 	$.ajax({
       type: "POST",
       url: "/qr_reject_ticket",
-      data: "",
+      data: params,
       success: function(repsonse){ 
           console.log("reject request Success") 
-          console.log(repsonse.data) 
+          console.log(repsonse) 
+          if(repsonse.status){ 
+          	alert("Entry has been rejected") 
+          	scan_new_qr()
+          }else{
+          		console.log(repsonse)
+          	}
       },
       error: function(repsonse){ console.log("reject request fail") }
     })
@@ -96,7 +122,11 @@ function reject_ticket(){
 
 
 
+function scan_new_qr(){
 
+	//document.getElementById('resetButton').click()
+	document.getElementById('startButton').click()
+}
 
 
 function reset_qr_feed(codeReader) {
@@ -108,6 +138,7 @@ function reset_qr_feed(codeReader) {
 
 	document.getElementById('qr_container').style.borderColor = "gray";
   document.getElementById('result').textContent = '';
+  //document.getElementById('scan_status').textContent = '';
   console.log('Reset.');
 }
 
@@ -173,14 +204,14 @@ function process(){
 	      start_qr_feed(selectedDeviceId, codeReader);
 	    })	// scan button
 
-	    //document.getElementById('resetButton').addEventListener('click', () => {
+	    // document.getElementById('resetButton').addEventListener('click', () => {
 	    //  reset_qr_feed(codeReader) ;
-	    //})
-	    document.getElementById('rejectButton').addEventListener('click', () => {
+	    // })
+	    document.getElementById('approveButton').addEventListener('click', () => {
 	     approve_ticket() ;
 	    })
 
-	    document.getElementById('approveButton').addEventListener('click', () => {
+	    document.getElementById('rejectButton').addEventListener('click', () => {
 	     reject_ticket() ;
 	    })
 	  })
