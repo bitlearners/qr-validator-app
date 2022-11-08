@@ -19,17 +19,21 @@ class QrCodesController < QrCodesBaseController
 
   def settings; end
 
+#  def scan_status
+#    respond_to do |format|
+#      format.js {render layout: false}
+#      format.html { render 'scan_status', json: {scheduled_task_id: "scheduled_task.id"}} # I had to tell rails to use the index by default if it's a html request. 
+#    end
+#  end
+
   def validate
     #puts params["data"]
     #puts conn.get("").body
 
     valid = perform_validation
     @valid_status = valid
-    #render partial: "scan_status", locals: @valid_status 
-    respond_to do |format|
-      format.js {render layout: false}
-      format.html { render 'scan_status'} # I had to tell rails to use the index by default if it's a html request. 
-    end
+
+    render json: {data: @valid_status} 
     return mark_as_arrived if valid
     puts "Invalid Ticket QR" if !valid
 
@@ -37,10 +41,11 @@ class QrCodesController < QrCodesBaseController
 
 
   def fetch_data
-    {
+    data = {
       name: "Noman",
       age: "xx"
     }
+    render json: {data: data} 
   end
 
 end

@@ -118,6 +118,7 @@
   function decodeOnce(codeReader, selectedDeviceId=undefined) {
     codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'qr_vid_el').then((result) => {
       console.log(result)
+      console.log('<%= @valid_status %>')
       reset_qr_feed(codeReader)
       document.getElementById('result').textContent = result.text
       payload = {"data": result.text}
@@ -126,7 +127,11 @@
         type: "POST",
         url: "/qr_validate",
         data: payload,
-        success: function(repsonse){ console.log("POST Success") },
+        success: function(repsonse){ 
+            console.log("POST fail") 
+            console.log(repsonse.data) 
+            update_status(repsonse.data)
+        },
         error: function(repsonse){ console.log("POST fail") }
       })
 
@@ -144,6 +149,16 @@
       }
     })
     
+  }
+
+  function update_status(status) {
+    if (status){
+        msg = "Success" ;
+    }else{
+        msg = "Failed" ;
+    }
+
+      document.getElementById("scan_status").textContent = msg ;
   }
 
   function reset_qr_feed(codeReader) {
