@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'profile', to: 'qr_codes#profile'
   get 'scanner', to: 'qr_codes#scanner'
   get 'history', to: 'qr_codes#history'
+  get 'admin_history', to: 'qr_codes#admin_history'
   get 'settings', to: 'qr_codes#settings'
 
 

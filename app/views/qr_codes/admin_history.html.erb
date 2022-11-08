@@ -1,0 +1,179 @@
+
+
+        <!-- main page content -->
+   
+        <div class="main-container container">
+            <!-- popular shopping  -->
+            <div class="row mb-3 gap-0">
+                <div class="col">
+                    <h6 class="title">Scanned Ticket History</h6>
+                </div>
+                <div class="col-auto" >
+                    <small class="text-secondary "> <span  id="count-list"></span> Ticket Scanned</small>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush bg-none" id="history-list">
+                                
+                               
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- main page content ends -->
+
+        <script type="text/javascript">
+        
+window.addEventListener("load", function (){
+
+    var history_list_el = document.getElementById("history-list");
+     var count_list_el = document.getElementById("count-list");
+    var users_list = {
+        "user_id1": {
+            "username": "Abhishek",
+            "scanned_at": "04-Nov-22 5:07pm",
+            "scan_value": "8e7090ebb3b2090e881c88917111",
+            "scan_status": true,
+            "invalid_qr": true,
+            "scan_value_name": "QR-1"
+        },
+        "user_id2": {
+            "username": "Noman",
+            "scanned_at": "03-Nov-22 5:07pm",
+            "scan_value": "8e7090ebb3b2090e881c88917222",
+            "scan_status": true,
+            "invalid_qr": false,
+            "scan_value_name": "QR-1"
+        },
+        "user_id3": {
+            "username": "Vikrant",
+            "scanned_at": "8-Nov-22 10:07pm",
+            "scan_value": "8e7090ebb3b2090e881c88917333",
+            "scan_status": true,
+            "invalid_qr": false,
+            "scan_value_name": "QR-1"
+        },
+    }
+
+
+
+var count = Object.keys(users_list).length
+console.log(`${count} entery received`) 
+count_list_el.innerText = count
+ 
+
+
+
+for (let x in users_list) {
+var a = users_list[x]
+
+
+var valid= a.scan_status
+var invalid_qr= a.invalid_qr
+console.log(valid)
+console.log(invalid_qr)
+
+
+
+
+history_list_el.innerHTML += `
+<li class="list-group-item">
+ <div class="row">
+<div class="col-auto">
+<div class="card shadow-none">
+<div class="card-body p-0">
+ 
+<%= image_tag('red-colored_qr.png') %>
+</div>
+</div>
+</div>
+<div class="col align-self-center ps-0">
+<p class="text-danger size-10 mb-0 qr-value-reduced">${a.scan_value}</p>
+<p class="size-12 mt-2">${a.scan_value_name}</p>
+</div>
+<div class="col align-self-center text-end">
+
+<p class="text-danger size-12 mb-0">${a.scan_status}</p>
+<p class="text-secondary text-muted size-10 mb-0">${a.scanned_at.split(" ")[0]}</p>
+<p class="text-secondary text-muted size-10 mb-0">${a.scanned_at.split(" ")[1]}</p>
+<p class="text-muted size-10 mb-0"><i>${a.username}</i></p>
+</div>
+</div>
+` 
+
+
+
+
+}
+
+
+})
+        </script>
+
+
+    </main>
+    <!-- Page ends-->
+
+
+
+<!-- Footer -->
+<footer class="footer footer-squared">
+    <div class="container">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item">
+                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-person-circle"></i>
+                        <span class="nav-text">Profile</span>
+                    </span>
+                <% end %>
+
+            </li>
+
+            <li class="nav-item">
+                <a class= "nav-link", style="text-decoration: none;" onclick=changePage("<%= scanner_url %>")>
+                    <span class="">
+                        <i class="bi bi-camera-fill"></i>
+                        <span class="nav-text">Scan</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item square-footerbtn">
+                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span class="bg-theme">
+                        <i class="bi bi-list-task size-22"></i>
+                        <span class="nav-text">History</span>
+                    </span>
+                  <% end %>
+                
+            </li>
+
+            <li class="nav-item">
+                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <span class="nav-text">Settings</span>
+                    </span>
+                <% end %>
+            </li>
+
+        </ul>
+    </div>
+</footer>
+<!-- Footer ends-->
+
+<style type="text/css">
+.qr-value-reduced{
+  max-width: 110px;
+  word-wrap: break-word;
+}
+</style>
+

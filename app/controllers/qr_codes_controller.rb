@@ -16,6 +16,8 @@ class QrCodesController < QrCodesBaseController
   end
 
   def history; end
+  def admin_history; end
+
 
   def settings; end
 
