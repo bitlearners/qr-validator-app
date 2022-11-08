@@ -3,12 +3,6 @@ class QrCodesBaseController < HomeController
 	before_action :set_user_data, only: %i[signup login]
   before_action :set_task, only: %i[ show edit update destroy ]
 
-
-  def load_tasks
-    #@tasks ||= conn.get("task/").body.compact
-    #binding.pry
-  end
-
   attr_reader :ticket_num
 
   private

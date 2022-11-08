@@ -15348,14 +15348,7 @@ a.card {
 .form-control{
   font-size: 14px;
 }
-#qr_container{
-  width: 200px;
-  height: 200px;
-  margin: 10px auto;
-  display: block;
-  border: 5px solid red;
-  border-radius: 15px;
-}
+
 .buttons-container{
   display:  flex;
   flex-flow: row;

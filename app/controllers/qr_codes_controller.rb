@@ -19,6 +19,17 @@ class QrCodesController < QrCodesBaseController
 
   def settings; end
 
+  def qr_approve_ticket
+    puts @valid_status
+  end
+
+  def qr_reject_ticket
+    puts @valid_status
+  end
+
+
+
+
 #  def scan_status
 #    respond_to do |format|
 #      format.js {render layout: false}

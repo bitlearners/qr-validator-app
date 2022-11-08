@@ -16,7 +16,6 @@
             </div>
         </div>
 
-
         <div id="sourceSelectPanel" style="display: none">
           <label for="sourceSelect">Change video source:</label>
           <select id="sourceSelect" style="max-width:400px">
@@ -34,26 +33,27 @@
         <!-- Main Screen QR content -->
         <div class=" buttons-container">
 
-            <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+            <div class="col-4 col-md-3 col-sm-2 text-center mb-4" id="scan-cancel-btn" style="display: none;">
                 <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
-                    <i class="bi bi-x-square scan-fun-btn h2" id="resetButton"></i> 
+                    <i class="bi bi-x-square scan-fun-btn h2" id="rejectButton"></i> 
                 </span>
                 <h6>Cancel</h6>
             </div>
 
-            <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+            <div class="col-4 col-md-3 col-sm-2 text-center mb-4" id="scan-scan_again-btn">
                 <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
                     <i class="bi bi-qr-code-scan scan-fun-btn h2" id="startButton"></i>
                 </span>
                 <h6>Scan Again</h6>
             </div>
 
-            <div class="col-4 col-md-3 col-sm-2 text-center mb-4">
+            <div class="col-4 col-md-3 col-sm-2 text-center mb-4" id="scan-approve-btn" style="display: none;">
                 <span class="avatar avatar-80 rounded-6 mb-2 shadow-sm bg-white text-color-theme">
                     <i class="bi bi-check-square scan-fun-btn h2" id="approveButton"></i> 
                 </span>
                 <h6>Approve</h6>
             </div>
+
         </div>
 
     </div>
@@ -110,132 +110,4 @@
 </footer>
 <!-- Footer ends-->
 
-
-
-<script type="text/javascript" >
-  //document.getElementById('qr_vid_el').addEventListener('unload', reset_qr_feed );
-
-  function decodeOnce(codeReader, selectedDeviceId=undefined) {
-    codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'qr_vid_el').then((result) => {
-      console.log(result)
-      console.log('<%= @valid_status %>')
-      reset_qr_feed(codeReader)
-      document.getElementById('result').textContent = result.text
-      payload = {"data": result.text}
-
-      $.ajax({
-        type: "POST",
-        url: "/qr_validate",
-        data: payload,
-        success: function(repsonse){ 
-            console.log("POST data to ruby Success") 
-            console.log(repsonse.data) 
-            update_status(repsonse.data)
-        },
-        error: function(repsonse){ console.log("POST data to ruby fail") }
-      })
-
-    }).catch((err) => {
-      if (err.toString().startsWith("R:") ){
-        //document.getElementById('result').textContent = "Please wait ..." ;
-        console.log("If camera doesn't start. retry");
-      }
-      else if (err.toString().includes("Failed to execute 'getImageData'") ){
-        document.getElementById('result').textContent = "Please wait ..." ;
-        process();
-      }else{
-      console.error(err)
-      document.getElementById('result').textContent = err
-      }
-    })
-    
-  }
-
-  function update_status(status) {
-    if (status){
-        msg = "Success" ;
-    }else{
-        msg = "Failed" ;
-    }
-
-      document.getElementById("scan_status").textContent = msg ;
-  }
-
-  function reset_qr_feed(codeReader) {
-    try{
-      codeReader.reset()
-    }catch(err){
-      console.log(err);
-    }
-    document.getElementById('result').textContent = '';
-    console.log('Reset.');
-  }
-
-  function start_qr_feed(selectedDeviceId, codeReader) {
-    const decodingStyle = document.getElementById('decoding-style').value;
-    document.getElementById('result').textContent = '';
-    document.getElementById('scan_status').textContent = '';
-
-    decodeOnce(codeReader, selectedDeviceId);
-    
-
-    //console.log(`Started decode from camera with id ${selectedDeviceId}`);
-    console.log('Started decode from camera');
-  }
-
-  window.addEventListener('load', process );
-  window.addEventListener('unload', function (){
-    console.log("page left") ;
-  } );
-
-  // main function
-  function process(){
-    //const codeReader = new ZXing.BrowserQRCodeReader();
-    //location.reload();
-    let selectedDeviceId;
-    let codeReader;
-    console.log('code reader initialized');
-    codeReader = new ZXing.BrowserQRCodeReader();
-    console.log('code reader initialized');
-    document.getElementById('result').textContent = '';
-    decodeOnce(codeReader, selectedDeviceId);
-    
-    //console.log(`Started decode from camera with id ${selectedDeviceId}`);
-    console.log('Started decode from camera');
-
-    codeReader.getVideoInputDevices()
-      .then((videoInputDevices) => {
-        const sourceSelect = document.getElementById('sourceSelect')
-        selectedDeviceId = undefined  ; //videoInputDevices[0].deviceId
-        if (videoInputDevices.length >= 1) {
-          videoInputDevices.forEach((element) => {
-            const sourceOption = document.createElement('option')
-            sourceOption.text = element.label
-            sourceOption.value = element.deviceId
-            sourceSelect.appendChild(sourceOption)
-          })
-
-          sourceSelect.onchange = () => {
-            selectedDeviceId = undefined; //sourceSelect.value;
-          };
-
-          const sourceSelectPanel = document.getElementById('sourceSelectPanel')
-          sourceSelectPanel.style.display = 'none'
-        }
-
-        document.getElementById('startButton').addEventListener('click', () => {
-          start_qr_feed(selectedDeviceId, codeReader);
-        })
-
-        document.getElementById('resetButton').addEventListener('click', () => {
-          reset_qr_feed(codeReader) ;
-        })
-
-      })
-      .catch((err) => {
-        console.error(`main error \n ${err}`)
-      })
-   
-  }
-
-</script>
+<%= render 'qr_codes/scanner_js' %>
