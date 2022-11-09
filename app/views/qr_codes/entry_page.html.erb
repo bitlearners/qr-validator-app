@@ -1,0 +1,157 @@
+
+
+        <!-- main page content -->
+   
+        <div class="main-container container">
+            <!-- popular shopping  -->
+            <div class="row mb-3 gap-0">
+                <div class="col">
+                    <h6 class="title">All Users Scanners</h6>
+                </div>
+                <div class="col-auto" >
+                    <small class="text-secondary ">  Total Scanners <span  id="count-list"></span></small>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-12">
+                    <ul class="list-group list-group-flush bg-none" id="history-list">
+                        
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- main page content ends -->
+
+        <script type="text/javascript">
+
+
+
+function showHistory(user_id){
+    console.log(user_id)
+    window.location='<%= admin_history_url %>'
+}
+
+window.addEventListener("load", function (){
+
+    var history_list_el = document.getElementById("history-list");
+     var count_list_el = document.getElementById("count-list");
+    var users_list = {
+                      "SZHGQC6XiiPNKwp59wIUtJVAKmQ2": 
+                                                      {
+                                                        "name": "Abhishek",
+                                                        "email" : "Abhishek@gmail.com",
+                                                        "qr_scan_count": 10
+                                                      },
+                      "beLHeWoWIvMRqp93Yjo7nZxKe963": 
+                                                      {
+                                                        "name": "Noman Sheikh",
+                                                        "email" : "noman@gmail.com",
+                                                        "qr_scan_count": 240
+                                                      },
+                       "l1rsPWK8LZfIPSCAMQykBsYwhZD2": 
+                                                      {
+                                                        "name": "Vikrant",
+                                                        "email" : "vikrant@gmail.com",
+                                                        "qr_scan_count":751
+                                                      }
+                    }
+
+
+
+var count = Object.keys(users_list).length
+console.log(`${count} entery received`) 
+count_list_el.innerText = count
+ 
+
+for (let x in users_list) {
+
+     console.log(x + ": "+ users_list[x])
+
+        history_list_el.innerHTML += `
+        <div class="card mb-1 " data=${x} onclick=showHistory('${x}')>
+            <div class="card-body p-0">
+            
+                <li class="list-group-item ">
+                 <div class="row">
+               
+                <div class="col align-self-center ps-0">
+                <p class="text size-10 mb-0 qr-value-reduced">${ users_list[x].email}</p>
+                <p class="size-12 mt-2">${ users_list[x].name}</p>
+                </div>
+                <div class="col align-self-center text-end">
+                 <p class="text-primary size-12 mb-0">Ticket Scanned</p>
+                <p class="text size-12 mb-0">${ users_list[x].qr_scan_count}</p>
+                
+                </div>
+            </div>
+        </div>
+        </div>
+        ` 
+      
+    }
+
+
+})
+        </script>
+
+
+    </main>
+    <!-- Page ends-->
+
+
+
+<!-- Footer -->
+<footer class="footer footer-squared">
+    <div class="container">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item">
+                <%= link_to  profile_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-person-circle"></i>
+                        <span class="nav-text">Profile</span>
+                    </span>
+                <% end %>
+
+            </li>
+
+            <li class="nav-item">
+                <a class= "nav-link", style="text-decoration: none;" onclick=changePage("<%= scanner_url %>")>
+                    <span class="">
+                        <i class="bi bi-camera-fill"></i>
+                        <span class="nav-text">Scan</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="nav-item square-footerbtn">
+                  <%= link_to  history_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span class="bg-theme">
+                        <i class="bi bi-list-task size-22"></i>
+                        <span class="nav-text">History</span>
+                    </span>
+                  <% end %>
+                
+            </li>
+
+            <li class="nav-item">
+                <%= link_to  settings_path, class: "nav-link", style:"text-decoration: none;" do %>
+                    <span>
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <span class="nav-text">Settings</span>
+                    </span>
+                <% end %>
+            </li>
+
+        </ul>
+    </div>
+</footer>
+<!-- Footer ends-->
+
+<style type="text/css">
+.qr-value-reduced{
+  max-width: 110px;
+  word-wrap: break-word;
+}
+</style>
+

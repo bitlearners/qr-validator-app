@@ -36,31 +36,67 @@ window.addEventListener("load", function (){
     var history_list_el = document.getElementById("history-list");
      var count_list_el = document.getElementById("count-list");
     var users_list = {
-        "user_id1": {
-            "username": "Abhishek",
-            "scanned_at": "04-Nov-22 5:07pm",
-            "scan_value": "8e7090ebb3b2090e881c88917111",
-            "scan_status": true,
-            "invalid_qr": true,
-            "scan_value_name": "QR-1"
-        },
-        "user_id2": {
-            "username": "Noman",
-            "scanned_at": "03-Nov-22 5:07pm",
-            "scan_value": "8e7090ebb3b2090e881c88917222",
-            "scan_status": true,
-            "invalid_qr": false,
-            "scan_value_name": "QR-1"
-        },
-        "user_id3": {
-            "username": "Vikrant",
-            "scanned_at": "8-Nov-22 10:07pm",
-            "scan_value": "8e7090ebb3b2090e881c88917333",
-            "scan_status": true,
-            "invalid_qr": false,
-            "scan_value_name": "QR-1"
-        },
+  "kwFNLiyewNVedvqy9LkjihgWopk2": [
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    },
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    },
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    },
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
     }
+  ],
+  "l1rsPWK8LZfIPSCAMQykBsYwhZD2": [
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    },
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    },
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    },
+    {
+      "invalid_qr": false,
+      "scan_success": true,
+      "scan_value": "da9b7cb07a4b8ce29de4f3771c6246e9",
+      "scan_value_name": "UNKNOWN",
+      "scanned_at": "2022-11-09T22:58:23.148+05:30"
+    }
+  ]
+}
 
 
 
@@ -72,45 +108,41 @@ count_list_el.innerText = count
 
 
 for (let x in users_list) {
-var a = users_list[x]
+    let user_data=users_list[x]
+    for (let y of user_data) {
+        
 
+        let dt = new Date("2022-11-09T22:58:23.148+05:30")
+        let newdatetime = dt.toLocaleString()
+     
+        
 
-var valid= a.scan_status
-var invalid_qr= a.invalid_qr
-console.log(valid)
-console.log(invalid_qr)
+        history_list_el.innerHTML += `
+        <li class="list-group-item">
+         <div class="row">
+        <div class="col-auto">
+        <div class="card shadow-none">
+        <div class="card-body p-0">
+         
+        <%= image_tag('green-colored_qr.png') %>
+        </div>
+        </div>
+        </div>
+        <div class="col align-self-center ps-0">
+        <p class="text-success size-10 mb-0 qr-value-reduced">Approved</p>
+        <p class="size-12 mt-2">${y.scan_value_name}</p>
+        </div>
+        <div class="col align-self-center text-end">
 
-
-
-
-history_list_el.innerHTML += `
-<li class="list-group-item">
- <div class="row">
-<div class="col-auto">
-<div class="card shadow-none">
-<div class="card-body p-0">
- 
-<%= image_tag('red-colored_qr.png') %>
-</div>
-</div>
-</div>
-<div class="col align-self-center ps-0">
-<p class="text-danger size-10 mb-0 qr-value-reduced">${a.scan_value}</p>
-<p class="size-12 mt-2">${a.scan_value_name}</p>
-</div>
-<div class="col align-self-center text-end">
-
-<p class="text-danger size-12 mb-0">${a.scan_status}</p>
-<p class="text-secondary text-muted size-10 mb-0">${a.scanned_at.split(" ")[0]}</p>
-<p class="text-secondary text-muted size-10 mb-0">${a.scanned_at.split(" ")[1]}</p>
-<p class="text-muted size-10 mb-0"><i>${a.username}</i></p>
-</div>
-</div>
-` 
-
-
-
-
+        <p class="text-success size-12 mb-0">${y.scan_status}</p>
+        <p class="text-secondary text-muted size-10 mb-0">${newdatetime.split(", ")[0]}</p>
+        <p class="text-secondary text-muted size-10 mb-0">${newdatetime.split(", ")[1]}</p>
+        <p class="text-muted size-10 mb-0"><i>${y.scan_value_name}</i></p>
+        </div>
+        </div>
+        ` 
+        console.log("The number is positive");
+    }
 }
 
 
