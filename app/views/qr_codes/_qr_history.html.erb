@@ -1,0 +1,33 @@
+<% if !@user_history["data"].blank? %>
+  <% for items in @user_history["data"] %>
+      
+      <%= tag.div class:"card mb-1" do %>
+        <%= tag.div class:"card-body p-0" do %>
+          <%= tag.li class:"list-group-item" do %> 
+            <%= tag.div class:"row" do %>
+              <%= tag.div class:"col-auto" do %>
+                <%= tag.div class:"card shadow-none" do %>
+                  <%= tag.div class:"card-body p-0" do %>
+                      <%= image_tag('black-colored_qr.png') %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <%= tag.div class:"col align-self-center ps-0" do %>
+                <%= tag.p(items["scan_value"], class:"text-success size-10 mb-0 qr-value-reduced") %>
+                <%= tag.p(items["scan_value_name"], class:"size-12 mt-2") %>
+              <% end %>
+              <%= tag.div class:"col align-self-center text-end" do %>
+                <%= tag.p(items["scan_status"], class:"text-success size-12 mb-0") %>
+                <%= tag.p(items["scanned_at"].to_time.strftime("%r"), class:"text-secondary text-muted size-10 mb-0") %>
+                <%= tag.p(items["scanned_at"].to_time.strftime("%d/%m/%y"), class:"text-secondary text-muted size-10 mb-0") %>
+                <%= tag.p(items["scanned_by"], class:"text-muted size-10 mb-0") %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+  <% end %>
+<% else %>
+  
+<% end %>

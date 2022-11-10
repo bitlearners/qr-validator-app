@@ -12,8 +12,8 @@ function decodeOnce(codeReader, selectedDeviceId=undefined) {
     localStorage.setItem("qr_key", result.text)
     console.log(localStorage.getItem("qr_key"));
     $.ajax({
-      type: "POST",
-      url: "/qr_validate",
+      type: "GET",
+      url: `/qr_validate/${result.text}`,
       data: payload,
       success: function(repsonse){ 
           console.log("POST data to ruby Success") 

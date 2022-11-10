@@ -6,45 +6,18 @@
             <!-- popular shopping  -->
             <div class="row mb-3 gap-0">
                 <div class="col">
-                    <h6 class="title">Scanned Ticket History</h6>
+                    <h6 class="title">My Scanned Ticket History</h6>
                 </div>
                 <div class="col-auto">
-                    <small class="text-secondary">1 items</small>
+                    <small class="text-secondary"><%= @history_count %></small>
                 </div>
             </div>
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body p-0">
-                            <ul class="list-group list-group-flush bg-none" id="history-list">
-                                <!-- @users_list={ "hqwdwqjd" : {name: Noman, scanned_at: 12:00pm} } -->
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <div class="card shadow-none">
-                                                <div class="card-body p-0">
-                                                    <div class="avatar avatar-60 rounded-6 coverimg">
-                                                        <%= image_tag('red-colored_qr.png') %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col align-self-center ps-0">
-                                            <p class="text-danger size-10 mb-0 qr-value-reduced">0001472f0960ba91cc8b45831d6e74f6</p>
-                                            <p class="size-12 mt-2">QR-1</p>
-                                        </div>
-                                        <div class="col align-self-center text-end">
-                                            <p class="text-danger size-12 mb-0">Invaid Ticket</p>
-                                            <p class="text-secondary text-muted size-10 mb-0">15-10-2021</p>
-                                            <p class="text-secondary text-muted size-10 mb-0">11:35am</p>
-                                            <p class="text-muted size-10 mb-0"><i><%= user.name[0,15] %></i></p>
-                                        </div>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
+                    <ul class="list-group list-group-flush bg-none" id="history-list">
+                        <!-- @users_list={ "hqwdwqjd" : {name: Noman, scanned_at: 12:00pm} } -->
+                        <%= render 'qr_codes/qr_history' %>
+                    </ul>
                 </div>
             </div>
 
@@ -111,4 +84,100 @@
 }
 
 </style>
+
+
+<script type="text/javascript">
+  window.addEventListener("unload", function () {
+  const history_list_el = document.getElementById("history-list")
+    load_history_data()
+
+  function function_name(argument) {
+    // body...
+  }
+
+  function load_history_data(){
+    params = {} //{user_id: user_id}
+    $.ajax({
+      type: "GET",
+      url: "/history_data",
+      success: function(response){
+        console.log("get_crnt_usr_qr_history request Success")
+        console.log(response)
+        get_history_cards(response.data)
+      },
+      error: function(response){ console.log(response) 
+        console.log("get_crnt_usr_qr_history request Failed")}
+    })
+  }
+
+  function get_style(obj){
+    let style_flag
+    let data_format = {
+      "success": {
+        "img": "green",
+        "text_style": "success",
+        "message": "Approved"
+      },
+      "failed": {
+        "img": "red",
+        "text_style": "danger",
+        "message": "Failed"
+      },
+      "invalid": {
+        "img": "orange",
+        "text_style": "warning",
+        "message": "Invalid"
+      }
+    }
+    if(!obj.invalid_qr){
+      if (obj.scan_status==true){
+          style_flag = "success"
+      }else{
+          style_flag = "failed"
+      }
+    }else{
+      style_flag = "invalid"
+    }
+    return data_format[style_flag]
+  }
+
+  function get_history_cards(user_data){
+    
+    for (let y of user_data) {
+      console.log(y)
+
+      style = get_style(y)
+
+      let dt = new Date("2022-11-09T22:58:23.148+05:30")
+      let newdatetime = dt.toLocaleString()
+      history_list_el.innerHTML += `
+          <div class="card mb-1">
+            <div class="card-body p-0">
+
+              <li class="list-group-item"> 
+                <div class="row">
+                  <div class="col-auto">
+                    <div class="card shadow-none">
+                      <div class="card-body p-0">
+                       <%= image_tag('black-colored_qr.png') %>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col align-self-center ps-0">
+                  <p class="text-${style.text_style} size-10 mb-0 qr-value-reduced">${style.message}</p>
+                  <p class="size-12 mt-2">${y.scan_value_name}</p>
+                </div>
+                <div class="col align-self-center text-end">
+                  <p class="text-${style.text_style} size-12 mb-0">${y.scan_status}</p>
+                  <p class="text-secondary text-muted size-10 mb-0">${newdatetime.split(", ")[0]}</p>
+                  <p class="text-secondary text-muted size-10 mb-0">${newdatetime.split(", ")[1]}</p>
+                  <p class="text-muted size-10 mb-0"><i>${y.username}</i></p>
+                </div>
+              </div>
+            </div>
+          </div>`
+    }
+  }
+  })
+</script>
 

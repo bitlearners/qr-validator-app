@@ -1,0 +1,18 @@
+<script type="text/javascript">
+	window.addEventListener("load", function (argument) {
+		document.write('<%= @json %>')
+	params = {}
+	$.ajax({
+      type: "POST",
+      url: "/get_all_qr_history",
+      data: params,
+      success: function(repsonse){ 
+          console.log("get_all_qr_history request Success") 
+          console.log(repsonse) 
+      },
+      error: function(repsonse){ console.log("get_all_qr_history request fail") }
+    })
+
+	})
+
+</script>

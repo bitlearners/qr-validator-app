@@ -13,10 +13,17 @@ class QrCodesController < QrCodesBaseController
   end
 
   def profile
-
   end
 
-  def history; end
+  def history
+    @user_history ||= get_crnt_usr_qr_history.with_indifferent_access
+    @history_count = @user_history["data"].count
+    puts @user_history
+  end
+
+  def history_data
+    render json: {data: fetch_crnt_usr_qr_data}
+  end
 
   def settings; end
 
@@ -33,7 +40,7 @@ class QrCodesController < QrCodesBaseController
 
 
   def validate
-    #puts params["data"]
+    puts params
     #puts conn.get("").body
 
     valid, invalid_qr_flag = perform_validation
