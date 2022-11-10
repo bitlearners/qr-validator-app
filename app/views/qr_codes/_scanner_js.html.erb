@@ -13,7 +13,7 @@ function decodeOnce(codeReader, selectedDeviceId=undefined) {
     console.log(localStorage.getItem("qr_key"));
     $.ajax({
       type: "GET",
-      url: `/qr_validate/${result.text}`,
+      url: '/qr_validate',
       data: payload,
       success: function(repsonse){ 
           console.log("POST data to ruby Success") 
@@ -24,7 +24,9 @@ function decodeOnce(codeReader, selectedDeviceId=undefined) {
           update_status(repsonse.data.valid_status, repsonse.data.invalid_qr_flag) 
 
       },
-      error: function(repsonse){ console.log("POST data to ruby fail") }
+      error: function(repsonse){ 
+      	console.log("POST data to ruby fail") 
+      console.log(repsonse) }
     })
 
   }).catch((err) => {

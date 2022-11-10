@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get 'test', to: 'qr_codes#test'
 
   #post 'qr_validate', to: 'qr_codes#validate'
-  get 'qr_validate/:qr_key', to: 'qr_codes#validate'
+  get 'qr_validate', to: 'qr_codes#validate'
 
   
   
