@@ -5,10 +5,57 @@
         <div class="row" style="width: 100%, display: block;" >
             
             <h2 class="text-center">Settings</h2>
+
+    <div class="row mt-2">
+        <div class="btns-cont">
+            <input type="radio" class="btn-check" name="options-outlined" id="all-history" onclick=sendFilterRequest('all-history') autocomplete="on" checked>
+            <label class="btn btn-outline-primary" for="all-history">All</label> 
+
+            <input type="radio" class="btn-check" name="options-outlined" id="success-history" autocomplete="off" >
+            <label class="btn btn-outline-success" for="success-history">Success</label>
+
+            <input type="radio" class="btn-check" name="options-outlined" id="invalid-history" autocomplete="off">
+            <label class="btn btn-outline-warning" for="invalid-history">Invalid</label>
+
+            <input type="radio" class="btn-check" name="options-outlined" id="error-history" autocomplete="off">
+             <label class="btn btn-outline-danger" for="error-history">Failed</label>
+        </div> 
+    </div>
+
+
+
         </div>
     <!-- People -->
 </main>
 <!-- Page ends-->
+
+<script type="text/javascript">
+  function sendFilterRequest(filter){
+    console.log(filter)
+
+</script>
+
+<style>
+.row{
+  overflow: hidden;
+}
+
+.btns-cont{
+  width: 100%;
+  #display: block;
+  overflow-x: scroll;
+  white-space:nowrap;
+}
+
+.btns-cont * {
+    display: inline-block;
+    vertical-align:top;
+    #width: 90px;
+    margin-right:20px;
+    white-space:normal;
+    scrollbar-color: whitesmoke;
+}
+</style>
 
 
 <!-- Footer -->

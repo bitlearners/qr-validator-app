@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   get 'settings', to: 'qr_codes#settings'
 
 
-  post '/qr_approve_ticket', to: 'qr_codes#qr_approve_ticket'
-  post '/qr_reject_ticket', to: 'qr_codes#qr_reject_ticket'
+  get '/qr_approve_ticket', to: 'qr_codes#qr_approve_ticket'
+  get '/qr_reject_ticket', to: 'qr_codes#qr_reject_ticket'
   
 
   #get 'get_all_qr_history', to: 'qr_history#get_all_qr_history'

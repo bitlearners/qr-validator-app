@@ -15,9 +15,15 @@ class QrCodesController < QrCodesBaseController
   def profile
   end
 
+
   def history
+    
     @user_history ||= get_crnt_usr_qr_history.with_indifferent_access
     @history_count = @user_history["data"].present? ? @user_history["data"].count : 0 
+    @status_msg ||= { "APRVD": "Approved", "CNCLD": "Cancelled", "ALAPRVD": "Already Approved", "INVAL": "Invalid" }.with_indifferent_access
+    @img_mapping ||= { "APRVD": "green-colored_qr.png", "CNCLD": "red-colored_qr.png", "ALAPRVD": "red-colored_qr.png", "INVAL": "orange-colored_qr.png" }.with_indifferent_access
+    @text_color ||= { "APRVD": "text-success", "CNCLD": "text-danger", "ALAPRVD": "text-danger", "INVAL": "text-warning" }.with_indifferent_access
+
     puts @user_history
   end
 

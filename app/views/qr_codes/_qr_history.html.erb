@@ -8,16 +8,16 @@
               <%= tag.div class:"col-auto" do %>
                 <%= tag.div class:"card shadow-none" do %>
                   <%= tag.div class:"card-body p-0" do %>
-                      <%= image_tag('black-colored_qr.png') %>
+                    <%= image_tag "#{@img_mapping[items['status_cd']]}" %>
                   <% end %>
                 <% end %>
               <% end %>
               <%= tag.div class:"col align-self-center ps-0" do %>
-                <%= tag.p(items["scan_value"], class:"text-success size-10 mb-0 qr-value-reduced") %>
+                <%= tag.p(items["scan_value"], class:"#{@text_color[items['status_cd']]} size-10 mb-0 qr-value-reduced") %>
                 <%= tag.p(items["scan_value_name"], class:"size-12 mt-2") %>
               <% end %>
               <%= tag.div class:"col align-self-center text-end" do %>
-                <%= tag.p(items["scan_status"], class:"text-success size-12 mb-0") %>
+                <%= tag.p(@status_msg[items["status_cd".to_s]], class:" #{@text_color[items['status_cd']]} size-12 mb-0") %>
                 <%= tag.p(items["scanned_at"].to_time.strftime("%r"), class:"text-secondary text-muted size-10 mb-0") %>
                 <%= tag.p(items["scanned_at"].to_time.strftime("%d/%m/%y"), class:"text-secondary text-muted size-10 mb-0") %>
                 <%= tag.p(items["scanned_by"], class:"text-muted size-10 mb-0") %>

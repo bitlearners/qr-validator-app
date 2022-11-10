@@ -11,20 +11,20 @@ class QrCodesBaseController < HomeController
   def perform_validation
   	data = fetch_qr_data(ticket_num)            ## fetch from firebase DB
     #binding.pry
-    if (data.nil? || data.include?("error"))
-      update_qr_scan_history(false, true)       ##  (valid_status, invalid_qr_flag)
+    if (data.nil? || data.include?("error"))    ##  (valid_status, invalid_qr_flag)
+      update_qr_scan_history(false, true)       ## invalid QR
       return [false, true] 
       #binding.pry
     elsif data['status']==1
-      update_qr_scan_history(false, false, data['sr-no']) 
-      return [false, false] 
+      update_qr_scan_history(false, false, "QR-#{data['sr-no']}") 
+      return [false, false]                     ## Valid and already approved
       #binding.pry
     else
       data["qr_key"] = ticket_num
     	@qr = QrCode.new(Hash(data).with_indifferent_access)
     	#puts data, @qr.as_json
-      update_qr_scan_history(true, false, data['sr-no']) 
-    	return [true, false]
+      update_qr_scan_history(true, false, "QR-#{data['sr-no']}") 
+    	return [true, false]                       ## Valid and not approved yet
     end
   end
 
@@ -40,8 +40,9 @@ class QrCodesBaseController < HomeController
         'status': 1,
         'scanned-at': Time.now().to_s
       }
-      puts Time.now().to_s
+      #puts Time.now().to_s
       puts update_qr_data(ticket_num, data)
+      puts update_qr_scan_approve_status(ticket_num)
     	puts "#{ticket_num} mark_as_arrived"
       return true
     else
@@ -77,17 +78,18 @@ class QrCodesBaseController < HomeController
     conn.update(full_path, data).body 
   end
 
-
+  #{ "APRVD": "Approved", "CNCLD": "Cancelled", "ALAPRVD": "Already Approved", "INVAL": "Invalid" }
   def update_qr_scan_history(scan_status, invalid_qr_flag, scan_value_name='INVALID')     ##  (valid_status, invalid_qr_flag)
     data = get_crnt_usr_qr_history[:data] || []
     #binding.pry
+    status_cd = invalid_qr_flag ? "INVAL" : (scan_status ? "CNCLD" : "ALAPRVD")
+
     new_ticket_scan_data = {
       scanned_at: Time.now().to_s,
       scan_value_name: scan_value_name,
-      scan_status: scan_status,
-      invalid_qr_flag: invalid_qr_flag,
       scan_value: ticket_num,
-      scanned_by: user.name
+      scanned_by: user.name,
+      status_cd: status_cd
     }
     #binding.pry
     data.append(new_ticket_scan_data)
@@ -95,6 +97,18 @@ class QrCodesBaseController < HomeController
     full_path = qr_db_path + "/" + current_user
     puts conn.set(full_path, data).body
   end
+
+
+  def update_qr_scan_approve_status(ticket_num)   ## update scan log as approved
+    data = get_crnt_usr_qr_history[:data] || []
+    #binding.pry
+    return if data.nil?
+    data[-1]["status_cd"] = "APRVD"
+    qr_db_path = ENV["firebase_scanned_qr_db_root_path"]
+    full_path = qr_db_path + "/" + current_user
+    puts conn.set(full_path, data).body
+  end
+
 
 
   #################################################################################################################
@@ -123,7 +137,7 @@ class QrCodesBaseController < HomeController
   def fetch_crnt_usr_qr_data(userid=nil)
     qr_db_path = ENV["firebase_scanned_qr_db_root_path"]
     #full_path = qr_db_path + "/" + userid if userid.present?
-    full_path = qr_db_path + "/" + current_user 
+    full_path = qr_db_path + "/" + current_user
     full_path = qr_db_path + "/" + userid if userid.present?
 
     conn.get(full_path).body

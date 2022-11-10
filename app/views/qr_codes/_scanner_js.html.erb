@@ -50,6 +50,7 @@ function show_permit_buttons() {
 
 	document.getElementById('scan-cancel-btn').style.display = "block";
 	document.getElementById('scan-approve-btn').style.display = "block";
+	
 }
 
 function hide_permit_buttons() {
@@ -74,6 +75,13 @@ function update_status(valid_status, invalid_qr_flag) {
 	}else{
 		msg = "Failed - No such Ticket";
 		scan_status_el.style = "color: red;" ;
+
+		Swal.fire({
+		  icon: 'error',
+		  title: 'Error',
+		  text: 'No such Ticket in record !'
+		})
+
 	}
   scan_status_el.textContent = msg ;
 }	
@@ -83,14 +91,20 @@ function approve_ticket(){
 	// ajax call ruby action to approve ticket
 	params = {"qr_key": localStorage.getItem("qr_key")}
 	$.ajax({
-      type: "POST",
+      type: "GET",
       url: "/qr_approve_ticket",
       data: params,
       success: function(repsonse){ 
           console.log("approve request Success") 
           console.log(repsonse) 
           if(repsonse.status){ 
-          	alert("Ticket has been approved") 
+          	//alert("Ticket has been approved") 
+
+				     Swal.fire(
+							  'Success!',
+							  'Ticket has been approved!',
+							  'success'
+							)
           	scan_new_qr()
           }else{
           		console.log(repsonse)
@@ -105,14 +119,20 @@ function reject_ticket(){
 	// ajax call ruby action to reject ticket
 	params = {"qr_key": localStorage.getItem("qr_key")}
 	$.ajax({
-      type: "POST",
+      type: "GET",
       url: "/qr_reject_ticket",
       data: params,
       success: function(repsonse){ 
           console.log("reject request Success") 
           console.log(repsonse) 
           if(repsonse.status){ 
-          	alert("Entry has been rejected") 
+
+						Swal.fire({
+						  icon: 'error',
+						  title: 'Alert',
+						  text: 'Ticket has been Rejected!'
+						})
+
           	scan_new_qr()
           }else{
           		console.log(repsonse)
