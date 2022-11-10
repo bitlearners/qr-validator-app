@@ -17,7 +17,7 @@ class QrCodesController < QrCodesBaseController
 
   def history
     @user_history ||= get_crnt_usr_qr_history.with_indifferent_access
-    @history_count = @user_history["data"].count
+    @history_count = @user_history["data"].present? ? @user_history["data"].count : 0 
     puts @user_history
   end
 
