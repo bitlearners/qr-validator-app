@@ -1,5 +1,5 @@
 <% if !@user_history["data"].blank? %>
-  <% for items in @user_history["data"] %>
+  <% for items in @user_history["data"].reverse() %>
       
       <%= tag.div class:"card mb-1" do %>
         <%= tag.div class:"card-body p-0" do %>
